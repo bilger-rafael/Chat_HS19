@@ -33,32 +33,33 @@ public class Splash_Model extends Model {
         protected Void call() throws Exception {
             this.updateProgress(1,  6);
             
+            TimeUnit.SECONDS.sleep(1);
+            
             // Create the service locator to hold our resources
             serviceLocator = ServiceLocator.getServiceLocator();
             this.updateProgress(2,  6);
+            
+            TimeUnit.SECONDS.sleep(1);
 
             // Initialize the resources in the service locator
             serviceLocator.setLogger(configureLogging());
             this.updateProgress(3,  6);
+            
+            TimeUnit.SECONDS.sleep(1);
 
             serviceLocator.setConfiguration(new Configuration());
             this.updateProgress(4,  6);
+            
+            TimeUnit.SECONDS.sleep(1);
 
             String language = serviceLocator.getConfiguration().getOption("Language");
             serviceLocator.setTranslator(new Translator(language));
             this.updateProgress(5,  6);
             
+            TimeUnit.SECONDS.sleep(1);
+            
             // ... more resources would go here...
             this.updateProgress(6,  6);
-            
-
-            // TEST
-            Integer i = 0;
-            for (; i < 1000000000; i++) {
-                if ((i % 1000000) == 0)
-                    this.updateProgress(i, 1000000000);
-            }
-            
             
             return null;
         }

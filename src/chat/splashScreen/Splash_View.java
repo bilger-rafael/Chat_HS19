@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -20,7 +21,6 @@ import javafx.stage.StageStyle;
  */
 public class Splash_View extends View<Splash_Model> {
     ProgressBar progress;
-    private Label lblStatus;
 
     public Splash_View(Stage stage, Splash_Model model) {
         super(stage, model);
@@ -31,9 +31,10 @@ public class Splash_View extends View<Splash_Model> {
     protected Scene create_GUI() {
         BorderPane root = new BorderPane();
         root.setId("splash");
-
-        lblStatus = new Label("Woof");
-        root.setCenter(lblStatus);
+        
+        VBox centerBox = new VBox( );
+        centerBox.setId("center");
+        root.setCenter(centerBox);
         
         progress = new ProgressBar();
         HBox bottomBox = new HBox();

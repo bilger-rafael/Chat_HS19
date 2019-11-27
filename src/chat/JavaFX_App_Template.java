@@ -1,5 +1,14 @@
 package chat;
 
+import chat.ChatClasses.ChatController;
+import chat.ChatClasses.ChatModel;
+import chat.ChatClasses.ChatView;
+import chat.ChatRoomClasses.ChatRoomController;
+import chat.ChatRoomClasses.ChatRoomModel;
+import chat.ChatRoomClasses.ChatRoomView;
+import chat.LoginClasses.LoginController;
+import chat.LoginClasses.LoginModel;
+import chat.LoginClasses.LoginView;
 import chat.appClasses.App_Controller;
 import chat.appClasses.App_Model;
 import chat.appClasses.App_View;
@@ -20,7 +29,10 @@ import javafx.stage.Stage;
 public class JavaFX_App_Template extends Application {
     private static JavaFX_App_Template mainProgram; // singleton
     private Splash_View splashView;
-    private App_View view;
+    //private LoginView view;
+    private ChatView view;
+    //private ChatRoomView view;
+    
 
     private ServiceLocator serviceLocator; // resources, after initialization
 
@@ -91,9 +103,27 @@ public class JavaFX_App_Template extends Application {
         // Initialize the application MVC components. Note that these components
         // can only be initialized now, because they may depend on the
         // resources initialized by the splash screen
-        App_Model model = new App_Model();
-        view = new App_View(appStage, model);
-        new App_Controller(model, view);
+        
+        // LoginView
+        /*
+        LoginModel model = new LoginModel();
+        view = new LoginView(appStage, model);
+        new LoginController(model, view);
+       	*/ 
+        
+        // ChatRoomView
+        /*
+        ChatRoomModel model = new ChatRoomModel();
+        view = new ChatRoomView(appStage, model);
+        new ChatRoomController(model, view);
+        */
+        
+        //ChatView
+        
+        ChatModel model = new ChatModel();
+        view = new ChatView(appStage, model);
+        new ChatController(model, view);
+        
 
         // Resources are now initialized
         serviceLocator = ServiceLocator.getServiceLocator();

@@ -1,5 +1,8 @@
 package chat;
 
+import chat.ChatClasses.ChatController;
+import chat.ChatClasses.ChatModel;
+import chat.ChatClasses.ChatView;
 import chat.ChatRoomClasses.ChatRoomController;
 import chat.ChatRoomClasses.ChatRoomModel;
 import chat.ChatRoomClasses.ChatRoomView;
@@ -27,8 +30,8 @@ public class JavaFX_App_Template extends Application {
     private static JavaFX_App_Template mainProgram; // singleton
     private Splash_View splashView;
     //private LoginView view;
-    //private ChatView view;
-    private ChatRoomView view;
+    private ChatView view;
+    //private ChatRoomView view;
     
 
     private ServiceLocator serviceLocator; // resources, after initialization
@@ -109,16 +112,18 @@ public class JavaFX_App_Template extends Application {
        	*/ 
         
         // ChatRoomView
+        /*
         ChatRoomModel model = new ChatRoomModel();
         view = new ChatRoomView(appStage, model);
         new ChatRoomController(model, view);
+        */
         
         //ChatView
-        /*
+        
         ChatModel model = new ChatModel();
         view = new ChatView(appStage, model);
         new ChatController(model, view);
-         */
+        
 
         // Resources are now initialized
         serviceLocator = ServiceLocator.getServiceLocator();

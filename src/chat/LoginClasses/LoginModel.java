@@ -14,5 +14,7 @@ public class LoginModel extends Model{
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application model initialized");
     }
+    
+
 
 }

@@ -136,4 +136,9 @@ public class LoginView extends View<LoginModel> {
 	                   
            stage.setTitle(t.getString("program.name"));
 	    }
+	   
+		public Button getLoginButton() {
+			return loginButton;
+		}
+	   
 }

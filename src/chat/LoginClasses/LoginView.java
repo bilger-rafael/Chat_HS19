@@ -17,6 +17,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -29,8 +30,9 @@ public class LoginView extends View<LoginModel> {
 	private MenuItem closeMenuItem;
 	private PasswordField pwField;
 	private TextField nameField;
-	private Button loginButton;
+	private Button loginButton, createUserButton;
 	private VBox centerBox;
+	private HBox BottonBox;
 	private Label nameLabel, pwLabel;
 
 	public LoginView(Stage stage, LoginModel model) {
@@ -89,15 +91,25 @@ public class LoginView extends View<LoginModel> {
 		nameField = new TextField();
 		pwLabel = new Label ();
 		pwField = new PasswordField();
+		
+		//Botton HBox
 		loginButton = new Button ();
+		createUserButton = new Button();
+		BottonBox = new HBox();
+		BottonBox.getChildren().addAll(createUserButton, loginButton);
+		
+		BottonBox.setSpacing(120);
 		centerBox.setSpacing(10);
 		
+		loginButton.setAlignment(Pos.BASELINE_CENTER);
+		createUserButton.setAlignment(Pos.BASELINE_CENTER);
 		
-		nameField.setPrefWidth(200);
-		pwField.setPrefWidth(200);
-		loginButton.setPrefWidth(80);
+		nameField.setPrefWidth(250);
+		pwField.setPrefWidth(250);
+		loginButton.setPrefWidth(100);
+		createUserButton.setPrefWidth(100);
 		
-		centerBox.getChildren().addAll(nameLabel, nameField, pwLabel, pwField, loginButton);
+		centerBox.getChildren().addAll(nameLabel, nameField, pwLabel, pwField, BottonBox);
 		
 		
 		
@@ -107,7 +119,7 @@ public class LoginView extends View<LoginModel> {
 		root.setTop(headMenu);
 		root.setCenter(centerBox);
 		
-		loginButton.setAlignment(Pos.BASELINE_CENTER);
+		
 
 	    
 
@@ -133,6 +145,7 @@ public class LoginView extends View<LoginModel> {
            nameLabel.setText(t.getString("programm.login.nameLabel"));
            pwLabel.setText(t.getString("Programm.login.pwLabel"));
            loginButton.setText(t.getString("Programm.login.loginButton"));
+           createUserButton.setText(t.getString("Programm.login.createUserButton"));
 	                   
            stage.setTitle(t.getString("program.name"));
 	    }

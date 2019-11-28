@@ -4,6 +4,9 @@ import chat.ServiceLocator;
 import chat.ChatRoomClasses.ChatRoomController;
 import chat.ChatRoomClasses.ChatRoomModel;
 import chat.ChatRoomClasses.ChatRoomView;
+import chat.NewUserClasses.NewUserController;
+import chat.NewUserClasses.NewUserModel;
+import chat.NewUserClasses.NewUserView;
 import chat.abstractClasses.Controller;
 import chat.appClasses.App_Model;
 import chat.appClasses.App_View;
@@ -26,6 +29,9 @@ public class LoginController extends Controller {
         //Action für LoginButton
         view.getLoginButton().setOnAction( e -> login() );
         
+        //Action für CreateUserButton
+        view.getCreateUserButton().setOnAction( e -> createUserView());
+        
         // register ourselves to handle window-closing event
         view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -43,6 +49,8 @@ public class LoginController extends Controller {
     	
 		ChatRoomView chatRoomView;
 		ChatRoomController chatRoomController;
+		
+		
     	// Validierung fehlt noch und Loginmit DB
     	
 
@@ -53,6 +61,17 @@ public class LoginController extends Controller {
     	chatRoomController = new ChatRoomController(chatRoomModel, chatRoomView);
    
     }
+    
+    //Leitet zur CreatUserView
+    private void createUserView() {
+    	
+    	NewUserModel newUserModel = new NewUserModel();
+		NewUserView newUserView = new NewUserView(view.getStage(),newUserModel);
+		
+    }
+    
+
+
     
 
 	

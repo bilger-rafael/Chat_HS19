@@ -164,4 +164,10 @@ public class JavaFX_App_Template extends Application {
     protected static JavaFX_App_Template getMainProgram() {
         return mainProgram;
     }
+    
+    public LoginView getLoginView() {
+    	return view;
+    }
+    
+
 }

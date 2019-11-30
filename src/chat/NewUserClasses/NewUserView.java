@@ -1,41 +1,44 @@
-package chat.LoginClasses;
+package chat.NewUserClasses;
 
 import java.util.Locale;
 import java.util.logging.Logger;
 
 import chat.ServiceLocator;
+import chat.ChatClasses.ChatModel;
+import chat.ChatRoomClasses.ChatRoomModel;
+import chat.LoginClasses.LoginModel;
 import chat.abstractClasses.View;
 import chat.commonClasses.Translator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class LoginView extends View<LoginModel> {
+public class NewUserView extends View<NewUserModel> {
 	
-	private LoginModel model;
+	private NewUserModel model;
 	private BorderPane root;
 	private MenuBar headMenu;
 	private Menu menuFile, menuEdit, menuLanguage, menuHelp;
 	private MenuItem closeMenuItem;
 	private PasswordField pwField;
 	private TextField nameField;
-	private Button loginButton, createUserButton;
+	private Button okButton, cancelButton;
 	private VBox centerBox;
 	private HBox bottonBox;
 	private Label nameLabel, pwLabel;
 
-	public LoginView(Stage stage, LoginModel model) {
+	public NewUserView(Stage stage, NewUserModel model) {
         super(stage, model);
         ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
         
@@ -93,21 +96,21 @@ public class LoginView extends View<LoginModel> {
 		pwField = new PasswordField();
 		
 		//Botton HBox
-		loginButton = new Button ();
-		createUserButton = new Button();
+		okButton = new Button ();
+		cancelButton = new Button();
 		bottonBox = new HBox();
-		bottonBox.getChildren().addAll(createUserButton, loginButton);
+		bottonBox.getChildren().addAll(cancelButton, okButton);
 		
 		bottonBox.setSpacing(120);
 		centerBox.setSpacing(10);
 		
-		loginButton.setAlignment(Pos.BASELINE_CENTER);
-		createUserButton.setAlignment(Pos.BASELINE_CENTER);
+		cancelButton.setAlignment(Pos.BASELINE_CENTER);
+		okButton.setAlignment(Pos.BASELINE_CENTER);
 		
 		nameField.setPrefWidth(250);
 		pwField.setPrefWidth(250);
-		loginButton.setPrefWidth(100);
-		createUserButton.setPrefWidth(100);
+		cancelButton.setPrefWidth(100);
+		okButton.setPrefWidth(100);
 		
 		centerBox.getChildren().addAll(nameLabel, nameField, pwLabel, pwField, bottonBox);
 		
@@ -142,19 +145,19 @@ public class LoginView extends View<LoginModel> {
            menuHelp.setText(t.getString("program.menu.help"));
            closeMenuItem.setText(t.getString("program.menu.file.close"));
            menuEdit.setText(t.getString("program.menu.file.edit"));
-           nameLabel.setText(t.getString("programm.login.nameLabel"));
-           pwLabel.setText(t.getString("Programm.login.pwLabel"));
-           loginButton.setText(t.getString("Programm.login.loginButton"));
-           createUserButton.setText(t.getString("Programm.login.createUserButton"));
+           nameLabel.setText(t.getString("programm.newUser.nameLabel"));
+           pwLabel.setText(t.getString("Programm.newUser.pwLabel"));
+           cancelButton.setText(t.getString("Programm.newUser.cancelButton"));
+           okButton.setText(t.getString("Programm.newUser.okButton"));
 	                   
            stage.setTitle(t.getString("program.name"));
 	    }
 	   
-		public Button getLoginButton() {
-			return loginButton;
+		public Button getCancelButton() {
+			return cancelButton;
 		}
 	   
-		public Button getCreateUserButton() {
-			return createUserButton;
+		public Button getOkButton() {
+			return okButton;
 		}
 }

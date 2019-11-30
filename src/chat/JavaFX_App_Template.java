@@ -29,8 +29,8 @@ import javafx.stage.Stage;
 public class JavaFX_App_Template extends Application {
     private static JavaFX_App_Template mainProgram; // singleton
     private Splash_View splashView;
-    //private LoginView view;
-    private ChatView view;
+    private LoginView view;
+    //private ChatView view;
     //private ChatRoomView view;
     
 
@@ -105,11 +105,13 @@ public class JavaFX_App_Template extends Application {
         // resources initialized by the splash screen
         
         // LoginView
-        /*
-        LoginModel model = new LoginModel();
-        view = new LoginView(appStage, model);
-        new LoginController(model, view);
-       	*/ 
+        
+        LoginModel loginModel = new LoginModel();
+        view = new LoginView(appStage, loginModel);
+        
+        ChatRoomModel chatRoomModel = new ChatRoomModel();
+        new LoginController(loginModel, view, chatRoomModel);
+       	 
         
         // ChatRoomView
         /*
@@ -119,11 +121,11 @@ public class JavaFX_App_Template extends Application {
         */
         
         //ChatView
-        
+        /*
         ChatModel model = new ChatModel();
         view = new ChatView(appStage, model);
         new ChatController(model, view);
-        
+        */
 
         // Resources are now initialized
         serviceLocator = ServiceLocator.getServiceLocator();
@@ -162,4 +164,10 @@ public class JavaFX_App_Template extends Application {
     protected static JavaFX_App_Template getMainProgram() {
         return mainProgram;
     }
+    
+    public LoginView getLoginView() {
+    	return view;
+    }
+    
+
 }

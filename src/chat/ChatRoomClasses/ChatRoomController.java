@@ -1,5 +1,6 @@
 package chat.ChatRoomClasses;
 
+import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
 import chat.LoginClasses.LoginModel;
 import chat.LoginClasses.LoginView;
@@ -14,6 +15,9 @@ public class ChatRoomController extends Controller {
     public ChatRoomController(ChatRoomModel model, ChatRoomView view) {
         super(model, view);
         
+        //Action für CreateUserButton
+        view.getLogoutMenuItem().setOnAction( e -> getBackLoginView());
+        
         // register ourselves to handle window-closing event
         view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -24,6 +28,15 @@ public class ChatRoomController extends Controller {
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application controller initialized");
     }
+
+	private void getBackLoginView() {
+		// TODO Logout mit dem Netzwerk und alle Fenster schliessen
+		
+    	//Logik für zurück auf LoginView
+    	view.stop();
+    	JavaFX_App_Template.getMainProgram().getLoginView().start();
+		
+	}
 
 	
 }

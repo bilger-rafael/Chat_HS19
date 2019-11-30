@@ -22,7 +22,7 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	private BorderPane root, botton;
 	private MenuBar headMenu;
 	private Menu menuFile, menuEdit, menuLanguage, menuHelp;
-	private MenuItem closeMenuItem;
+	private MenuItem closeMenuItem, logoutMenuItem;
 	private Label myAccountLabel;	
 	private Button joinButton, newChatButton;
 
@@ -52,9 +52,11 @@ public class ChatRoomView extends View<ChatRoomModel> {
 		
 		menuFile = new Menu();
 		closeMenuItem = new MenuItem();
+		logoutMenuItem = new MenuItem();
 		
 		
-		menuFile.getItems().add(closeMenuItem);
+		
+		menuFile.getItems().addAll(closeMenuItem, logoutMenuItem);
 		
 		menuEdit = new Menu();
 		
@@ -127,6 +129,7 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	       menuLanguage.setText(t.getString("program.menu.file.language"));
            menuHelp.setText(t.getString("program.menu.help"));
            closeMenuItem.setText(t.getString("program.menu.file.close"));
+           logoutMenuItem.setText(t.getString("program.menu.file.logout"));
            menuEdit.setText(t.getString("program.menu.file.edit"));
            myAccountLabel.setText(t.getString("program.chatRoom.myAccount"));
            joinButton.setText(t.getString("program.chatRoom.join"));
@@ -136,4 +139,7 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	                   
            stage.setTitle(t.getString("program.name"));
 	    }
+	public MenuItem getLogoutMenuItem() {
+			return logoutMenuItem;
+		}
 }

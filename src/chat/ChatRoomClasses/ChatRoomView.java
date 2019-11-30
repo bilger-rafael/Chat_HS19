@@ -46,29 +46,18 @@ public class ChatRoomView extends View<ChatRoomModel> {
 		//Top mein Name
 		myAccountLabel = new Label ();
 		
-		
 		//Top Menuleiste
 		headMenu = new MenuBar();
-		
 		menuFile = new Menu();
 		closeMenuItem = new MenuItem();
 		logoutMenuItem = new MenuItem();
-		
-		
-		
 		menuFile.getItems().addAll(closeMenuItem, logoutMenuItem);
-		
 		menuEdit = new Menu();
-		
 		menuHelp = new Menu();
-		
 		menuLanguage = new Menu();
-
 		menuLanguage.getItems().addAll();
 		
-		
-		
-		
+
 		//Locale setzen
 	       for (Locale locale : sl.getLocales()) {
 	           MenuItem language = new MenuItem(locale.getLanguage());
@@ -81,8 +70,6 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	        }
 		
 	    headMenu.getMenus().addAll(menuFile, menuEdit, menuLanguage, menuHelp);
-		
-		
 		
 		
 		//Center 
@@ -101,18 +88,11 @@ public class ChatRoomView extends View<ChatRoomModel> {
 		botton.setLeft(newChatButton);
 		botton.setRight(joinButton);
 		
-		
 		//Borderpane anordnen
 		root.setTop(headMenu);
 		root.setBottom(botton);
 		root.setCenter(chatRoomCenter);
 		
-
-
-	    
-
-	   
-        
         updateTexts();
 		
         Scene scene = new Scene(root);

@@ -32,7 +32,7 @@ public class LoginView extends View<LoginModel> {
 	private TextField nameField;
 	private Button loginButton, createUserButton;
 	private VBox centerBox;
-	private HBox bottonBox;
+	private BorderPane bottonBox;
 	private Label nameLabel, pwLabel;
 
 	public LoginView(Stage stage, LoginModel model) {
@@ -54,20 +54,12 @@ public class LoginView extends View<LoginModel> {
 		
 		menuFile = new Menu();
 		closeMenuItem = new MenuItem();
-		
-		
 		menuFile.getItems().add(closeMenuItem);
-		
 		menuEdit = new Menu();
-		
 		menuHelp = new Menu();
-		
 		menuLanguage = new Menu();
-
 		menuLanguage.getItems().addAll();
-		
-		
-		
+
 		
 		//Locale setzen
 	       for (Locale locale : sl.getLocales()) {
@@ -81,10 +73,7 @@ public class LoginView extends View<LoginModel> {
 	        }
 		
 	    headMenu.getMenus().addAll(menuFile, menuEdit, menuLanguage, menuHelp);
-		
-		
-		
-		
+
 		//Center 
 		centerBox = new VBox();
 		nameLabel = new Label ();
@@ -95,10 +84,12 @@ public class LoginView extends View<LoginModel> {
 		//Botton HBox
 		loginButton = new Button ();
 		createUserButton = new Button();
-		bottonBox = new HBox();
-		bottonBox.getChildren().addAll(createUserButton, loginButton);
 		
-		bottonBox.setSpacing(120);
+		bottonBox = new BorderPane();
+		
+		bottonBox.setLeft(createUserButton);
+		bottonBox.setRight(loginButton);
+	
 		centerBox.setSpacing(10);
 		
 		loginButton.setAlignment(Pos.BASELINE_CENTER);
@@ -111,10 +102,7 @@ public class LoginView extends View<LoginModel> {
 		
 		centerBox.getChildren().addAll(nameLabel, nameField, pwLabel, pwField, bottonBox);
 		
-		
-		
-		
-		
+	
 		//Borderpane anordnen
 		root.setTop(headMenu);
 		root.setCenter(centerBox);

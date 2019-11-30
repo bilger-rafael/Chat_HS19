@@ -35,7 +35,7 @@ public class NewUserView extends View<NewUserModel> {
 	private TextField nameField;
 	private Button okButton, cancelButton;
 	private VBox centerBox;
-	private HBox bottonBox;
+	private BorderPane bottonBox;
 	private Label nameLabel, pwLabel;
 
 	public NewUserView(Stage stage, NewUserModel model) {
@@ -54,24 +54,15 @@ public class NewUserView extends View<NewUserModel> {
 		
 		//Top Menuleiste
 		headMenu = new MenuBar();
-		
 		menuFile = new Menu();
 		closeMenuItem = new MenuItem();
-		
-		
 		menuFile.getItems().add(closeMenuItem);
-		
 		menuEdit = new Menu();
-		
 		menuHelp = new Menu();
-		
 		menuLanguage = new Menu();
-
 		menuLanguage.getItems().addAll();
 		
-		
-		
-		
+
 		//Locale setzen
 	       for (Locale locale : sl.getLocales()) {
 	           MenuItem language = new MenuItem(locale.getLanguage());
@@ -98,10 +89,11 @@ public class NewUserView extends View<NewUserModel> {
 		//Botton HBox
 		okButton = new Button ();
 		cancelButton = new Button();
-		bottonBox = new HBox();
-		bottonBox.getChildren().addAll(cancelButton, okButton);
+		bottonBox = new BorderPane();
 		
-		bottonBox.setSpacing(120);
+		bottonBox.setLeft(cancelButton);
+		bottonBox.setRight(okButton);
+		
 		centerBox.setSpacing(10);
 		
 		cancelButton.setAlignment(Pos.BASELINE_CENTER);

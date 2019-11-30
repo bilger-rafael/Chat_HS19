@@ -38,25 +38,20 @@ public class NewUserController extends Controller {
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application controller initialized");
     }
-
-	
-
     
     //Leitet zur CreatUserView
     private void getBackLoginView() {
-    	
     	//Logik für zurück auf LoginView
-
+    	view.stop();
+    	JavaFX_App_Template.getMainProgram().getLoginView().start();
 		
     }
     //Leitet zur CreatUserView
     private void createUserAndBackLoginView() {
-    	
-    	//Validierung der Eingabe fehlt noch
+    	//TODO Validierung der Eingabe
     	
     	//Logik für zurück auf LoginView
-    	
-
-		
+    	view.stop();
+    	JavaFX_App_Template.getMainProgram().getLoginView().start();
     }
 }

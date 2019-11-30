@@ -15,7 +15,7 @@ import javafx.concurrent.Worker;
  */
 public class Splash_Controller extends Controller<Splash_Model, Splash_View> {
 
-    public Splash_Controller(final JavaFX_App_Template main, Splash_Model model, Splash_View view) {
+    public Splash_Controller(Splash_Model model, Splash_View view) {
         super(model, view);
         
         // We could monitor the progress property and pass it on to the progress bar
@@ -44,7 +44,7 @@ public class Splash_Controller extends Controller<Splash_Model, Splash_View> {
         model.initializer.stateProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue == Worker.State.SUCCEEDED)
-                        main.startApp();
+                    	JavaFX_App_Template.getMainProgram().startLogin();
                 });
     }
 }

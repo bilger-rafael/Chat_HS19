@@ -1,5 +1,6 @@
 package chat.LoginClasses;
 
+import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
 import chat.ChatRoomClasses.ChatRoomController;
 import chat.ChatRoomClasses.ChatRoomModel;
@@ -15,64 +16,40 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 
-
 public class LoginController extends Controller {
 	ServiceLocator serviceLocator;
-	
-	private ChatRoomView chatRoomview;
-	private ChatRoomModel chatRoomModel;
+
 	private LoginModel loginModel;
-	
-    public LoginController(LoginModel model, LoginView view, ChatRoomModel chatRoomModel) {
-        super(model, view);
-        
-        //Action für LoginButton
-        view.getLoginButton().setOnAction( e -> login() );
-        
-        //Action für CreateUserButton
-        view.getCreateUserButton().setOnAction( e -> createUserView());
-        
-        // register ourselves to handle window-closing event
-        view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                Platform.exit();
-            }
-        });
-        serviceLocator = ServiceLocator.getServiceLocator();        
-        serviceLocator.getLogger().info("Application controller initialized");
-    }
-    
-    
-   
-    private void login() {
-    	
-		ChatRoomView chatRoomView;
-		ChatRoomController chatRoomController;
-		
-		
-    	// Validierung fehlt noch und Loginmit DB
-    	
 
+	public LoginController(LoginModel model, LoginView view) {
+		super(model, view);
 
+		// Action für LoginButton
+		view.getLoginButton().setOnAction(e -> login());
 
+		// Action für CreateUserButton
+		view.getCreateUserButton().setOnAction(e -> createUserView());
 
-    	chatRoomView = new ChatRoomView(view.getStage(), chatRoomModel);
-    	chatRoomController = new ChatRoomController(chatRoomModel, chatRoomView);
-   
-    }
-    
-    //Leitet zur CreatUserView
-    private void createUserView() {
-    	
-    	NewUserModel newUserModel = new NewUserModel();
-		NewUserView newUserView = new NewUserView(view.getStage(),newUserModel);
-		
-    }
-    
+		// register ourselves to handle window-closing event
+		view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				Platform.exit();
+			}
+		});
+		serviceLocator = ServiceLocator.getServiceLocator();
+		serviceLocator.getLogger().info("Application controller initialized");
+	}
 
+	private void login() {
+		// Validierung fehlt noch und Loginmit DB
 
-    
+		JavaFX_App_Template.getMainProgram().startChatRoom();
+	}
 
-	
+	// Leitet zur CreatUserView
+	private void createUserView() {
+		JavaFX_App_Template.getMainProgram().startNewUser();
+	}
+
 }

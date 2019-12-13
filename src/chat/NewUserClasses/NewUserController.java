@@ -49,7 +49,8 @@ public class NewUserController extends Controller {
     //Leitet zur CreatUserView
     private void createUserAndBackLoginView() {
     	//TODO Validierung der Eingabe
-    	
+    	//TODO Anfrage an Server senden
+    	//TODO Anfrage engegen nehmen
     	//Logik für zurück auf LoginView
     	view.stop();
     	JavaFX_App_Template.getMainProgram().getLoginView().start();

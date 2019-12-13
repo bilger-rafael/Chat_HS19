@@ -42,8 +42,9 @@ public class LoginController extends Controller {
 	}
 
 	private void login() {
-		// Validierung fehlt noch und Loginmit DB
-
+    	//TODO Validierung der Eingabe
+    	//TODO Anfrage an Server senden
+    	//TODO Anfrage engegen nehmen
 		JavaFX_App_Template.getMainProgram().startChatRoom();
 	}
 

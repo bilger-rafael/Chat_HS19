@@ -111,12 +111,7 @@ public class NewUserView extends View<NewUserModel> {
 		//Borderpane anordnen
 		root.setTop(headMenu);
 		root.setCenter(centerBox);
-		
-		
 
-	    
-
-	   
         
         updateTexts();
 		
@@ -156,6 +151,10 @@ public class NewUserView extends View<NewUserModel> {
 		
 		public void setPwField(String s) {
 			pwField.setText(s);;
+		}
+		
+		public TextField getNameField() {
+			return nameField;
 		}
 		
 

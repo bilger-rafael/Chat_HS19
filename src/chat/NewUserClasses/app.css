@@ -27,3 +27,11 @@
 .pwField-green{
 	-fx-control-inner-background: lightgreen
 }
+
+.nameField-red{
+	-fx-control-inner-background: lightcoral
+}
+
+.nameField-green{
+	-fx-control-inner-background: lightgreen
+}

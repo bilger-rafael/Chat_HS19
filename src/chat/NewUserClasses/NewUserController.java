@@ -1,5 +1,7 @@
 package chat.NewUserClasses;
 
+import java.net.Socket;
+
 import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
 import chat.ChatClasses.ChatModel;
@@ -16,9 +18,13 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import message.CreateLogin;
 
 public class NewUserController extends Controller {
 	ServiceLocator serviceLocator;
+	String name;
+	String pw;
+	Socket socket;
 
 	
     public NewUserController(NewUserModel model, NewUserView view) {
@@ -57,8 +63,27 @@ public class NewUserController extends Controller {
 				}
 			}
 		});
+		
+		view.getNameField().textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				view.getOkButton().setDisable(true);
+
+				int i = view.getNameField().getText().length();
+
+				if( i < 3 ) {
+					view.getNameField().getStyleClass().remove("nameField-green");
+					view.getNameField().getStyleClass().add("nameField-red");
+				}else {
+					view.getNameField().getStyleClass().remove("nameField-red");
+					view.getNameField().getStyleClass().add("nameField-green");
+					view.getOkButton().setDisable(false);
+				}
+			}
+		});
         
-        
+        this.name = view.getNameField().getText();
+        this.pw = view.getPwField().getText();
         
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application controller initialized");
@@ -74,11 +99,27 @@ public class NewUserController extends Controller {
     //Erstellt User beim Server und leitet zur LoginView
     private void createUserAndBackLoginView() {
     	//TODO Anfrage an Server senden und User empfangen
+    	String[] data = new String[2];
+    	data[1]= this.name;
+    	data[2]=this.pw;
+    	CreateLogin createLogin = new CreateLogin(data);
     	
+    	//TODO Socketverbidnungmachen
+    	//createLogin.send(socket);
+    	/*
+    	if(createLogin.receive(socket)) {
+        	//Logik für zurück auf LoginView
+        	
+        	*/
+        	view.stop();
+        	JavaFX_App_Template.getMainProgram().getLoginView().setConnectedLabel();
+        	JavaFX_App_Template.getMainProgram().getLoginView().start();
+    	/*}
+    	else{
+    		//TODO Try 
+    	};
+    	*/
     	
-    	//Logik für zurück auf LoginView
-    	view.stop();
-    	JavaFX_App_Template.getMainProgram().getLoginView().setConnectedLabel();
-    	JavaFX_App_Template.getMainProgram().getLoginView().start();
+
     }
 }

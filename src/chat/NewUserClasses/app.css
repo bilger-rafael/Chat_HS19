@@ -20,3 +20,10 @@
   -fx-text-fill: #000000;
 	
 }
+.pwField-red{
+	-fx-control-inner-background: lightcoral
+}
+
+.pwField-green{
+	-fx-control-inner-background: lightgreen
+}

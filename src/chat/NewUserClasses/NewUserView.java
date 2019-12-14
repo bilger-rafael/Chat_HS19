@@ -90,6 +90,7 @@ public class NewUserView extends View<NewUserModel> {
 		okButton = new Button ();
 		cancelButton = new Button();
 		bottonBox = new BorderPane();
+
 		
 		bottonBox.setLeft(cancelButton);
 		bottonBox.setRight(okButton);
@@ -105,9 +106,6 @@ public class NewUserView extends View<NewUserModel> {
 		okButton.setPrefWidth(100);
 		
 		centerBox.getChildren().addAll(nameLabel, nameField, pwLabel, pwField, bottonBox);
-		
-		
-		
 		
 		
 		//Borderpane anordnen
@@ -152,4 +150,13 @@ public class NewUserView extends View<NewUserModel> {
 		public Button getOkButton() {
 			return okButton;
 		}
+		public PasswordField getPwField() {
+			return pwField;
+		}
+		
+		public void setPwField(String s) {
+			pwField.setText(s);;
+		}
+		
+
 }

@@ -33,7 +33,7 @@ public class LoginView extends View<LoginModel> {
 	private Button loginButton, createUserButton;
 	private VBox centerBox;
 	private BorderPane bottonBox;
-	private Label nameLabel, pwLabel;
+	private Label nameLabel, pwLabel, connectedLabel;
 
 	public LoginView(Stage stage, LoginModel model) {
         super(stage, model);
@@ -84,6 +84,7 @@ public class LoginView extends View<LoginModel> {
 		//Botton HBox
 		loginButton = new Button ();
 		createUserButton = new Button();
+
 		
 		bottonBox = new BorderPane();
 		
@@ -102,10 +103,13 @@ public class LoginView extends View<LoginModel> {
 		
 		centerBox.getChildren().addAll(nameLabel, nameField, pwLabel, pwField, bottonBox);
 		
-	
+		
+		
+		connectedLabel = new Label();
 		//Borderpane anordnen
 		root.setTop(headMenu);
 		root.setCenter(centerBox);
+		root.setBottom(connectedLabel);
 		
 		
 
@@ -144,5 +148,10 @@ public class LoginView extends View<LoginModel> {
 	   
 		public Button getCreateUserButton() {
 			return createUserButton;
+		}
+		
+		public void setConnectedLabel() {
+			Translator t = ServiceLocator.getServiceLocator().getTranslator();
+			connectedLabel.setText(t.getString("Programm.login.connectedLabel"));
 		}
 }

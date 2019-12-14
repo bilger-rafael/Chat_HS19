@@ -10,6 +10,8 @@ import chat.LoginClasses.LoginModel;
 import chat.LoginClasses.LoginView;
 import chat.abstractClasses.Controller;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -34,24 +36,49 @@ public class NewUserController extends Controller {
             public void handle(WindowEvent event) {
                 Platform.exit();
             }
+          
         });
+        
+      // Validierung der Passwort-Eingabe
+		view.getPwField().textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				view.getOkButton().setDisable(true);
+
+				int i = view.getPwField().getText().length();
+
+				if( i < 3 ) {
+					view.getPwField().getStyleClass().remove("pwField-green");
+					view.getPwField().getStyleClass().add("pwField-red");
+				}else {
+					view.getPwField().getStyleClass().remove("pwField-red");
+					view.getPwField().getStyleClass().add("pwField-green");
+					view.getOkButton().setDisable(false);
+				}
+			}
+		});
+        
+        
+        
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application controller initialized");
     }
     
-    //Leitet zur CreatUserView
+    //Leitet zur LoginView
     private void getBackLoginView() {
     	//Logik für zurück auf LoginView
     	view.stop();
     	JavaFX_App_Template.getMainProgram().getLoginView().start();
 		
     }
-    //Leitet zur CreatUserView
+    //Erstellt User beim Server und leitet zur LoginView
     private void createUserAndBackLoginView() {
-    	//TODO Validierung der Eingabe
+    	//TODO Anfrage an Server senden und User empfangen
+    	
     	
     	//Logik für zurück auf LoginView
     	view.stop();
+    	JavaFX_App_Template.getMainProgram().getLoginView().setConnectedLabel();
     	JavaFX_App_Template.getMainProgram().getLoginView().start();
     }
 }

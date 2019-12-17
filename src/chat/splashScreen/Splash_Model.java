@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import chat.ServiceLocator;
 import chat.abstractClasses.Model;
+import chat.commonClasses.Client;
 import chat.commonClasses.Configuration;
 import chat.commonClasses.Translator;
 import javafx.concurrent.Task;
@@ -57,6 +58,8 @@ public class Splash_Model extends Model {
             this.updateProgress(5,  6);
             
             TimeUnit.SECONDS.sleep(1);
+            
+            Client.getClient();
             
             // ... more resources would go here...
             this.updateProgress(6,  6);

@@ -10,9 +10,10 @@ public class ChatRoomModel extends Model{
     public ChatRoomModel() {
     	super();
        
-        
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application model initialized");
+        
+        //TODO Anfrage an Server, alle Chatrooms abrufen und in Observebal Table speichern
     }
 
 }

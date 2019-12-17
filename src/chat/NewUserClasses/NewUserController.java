@@ -35,7 +35,7 @@ public class NewUserController extends Controller {
         view.getCancelButton().setOnAction( e -> getBackLoginView());
         
         //Action für CreateUserButton
-        view.getOkButton().setOnAction( e -> createUserAndBackLoginView());
+        view.getOkButton().setOnAction( e -> createUser());
         
         // register ourselves to handle window-closing event
         view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -98,7 +98,7 @@ public class NewUserController extends Controller {
 		
     }
     //Erstellt User beim Server und leitet zur LoginView
-    private void createUserAndBackLoginView() {
+    private void createUser() {
     	//TODO Anfrage an Server senden und User empfangen
     	String[] data = new String[2];
     	data[1]= this.name;
@@ -112,15 +112,18 @@ public class NewUserController extends Controller {
         	//Logik für zurück auf LoginView
         	
         	*/
-        	view.stop();
-        	JavaFX_App_Template.getMainProgram().getLoginView().setConnectedLabel();
-        	JavaFX_App_Template.getMainProgram().getLoginView().start();
+        	backLoginView();
     	/*}
     	else{
     		//TODO Try 
     	};
-    	*/
-    	
+    	*/ 	
 
+    }
+    
+    private void backLoginView() {
+    	view.stop();
+    	JavaFX_App_Template.getMainProgram().getLoginView().setConnectedLabel();
+    	JavaFX_App_Template.getMainProgram().getLoginView().start();
     }
 }

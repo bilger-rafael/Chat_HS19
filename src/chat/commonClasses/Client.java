@@ -1,13 +1,7 @@
 package chat.commonClasses;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.time.Instant;
-import java.util.Scanner;
-
 import chat.ServiceLocator;
 import chat.message.Message;
 
@@ -17,79 +11,57 @@ public class Client implements Sendable {
 
 	public static Client getClient() {
 		if (client == null) {
-			client = new Client();
+			ServiceLocator serviceLocator = ServiceLocator.getServiceLocator();
+			String ipAddress = serviceLocator.getConfiguration().getOption("ServerUrl");
+			int portNumber = Integer.parseInt(serviceLocator.getConfiguration().getOption("ServerPort"));
+			try {
+				client = new Client(new Socket(ipAddress, portNumber));
+				serviceLocator.getLogger().info("Connected");
+			} catch (IOException e) {
+				//TODO Error besser handeln, Programm abbrechen
+				e.printStackTrace();
+			} 
 		}
 		return client;
 	}
 
-	private Client() {
-
-		ServiceLocator serviceLocator = ServiceLocator.getServiceLocator();
-
-		String ipAddress = serviceLocator.getConfiguration().getOption("ServerUrl");
-		int portNumber = Integer.parseInt(serviceLocator.getConfiguration().getOption("ServerPort"));
-
-		boolean valid = false;
+	private Client(Socket socket) {
 		
-		//TODO Ersetzten, da die Logik sofort durchlofen wird und im finally mit socket.close(); der Socket wider geschlsosen
+		this.socket = socket;
 		
-		try {
-			socket = new Socket(ipAddress, portNumber);
+		_init_reader();
 
-			serviceLocator.getLogger().info("Connected");
+	}
 
-			try (BufferedReader socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					OutputStreamWriter socketOut = new OutputStreamWriter(socket.getOutputStream())) {
-
-				// Create thread to read incoming messages
-				Runnable r = new Runnable() {
-					@Override
-					public void run() {
-						while (true) {
-							
-							String msg;
-							try {
-								msg = socketIn.readLine();
-								serviceLocator.getLogger().info("Received: " + msg);
-								//TODO Einkommende Message verarbeiten (Events für jeden Message Typ (Result, MessageError, MessageText)
-							} catch (IOException e) {
-								break;
-							}
-//							if (msg == null)
-//								break; // In case the server closes the socket
-						}
-					}
-				};
-				Thread t = new Thread(r);
-				t.start();
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (socket != null)
+	private void _init_reader() {
+		// Create thread to read incoming messages
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
 				try {
-					socket.close();
-				} catch (IOException e) {
-					// we don't care
+					while (true) {
+						Message msg = Message.receive(socket);
+						
+						ServiceLocator.getServiceLocator().getLogger().info("Received: " + msg);
+						// TODO Einkommende Message verarbeiten (Events für jeden Message Typ (Result,
+						// MessageError, MessageText)
+					}
+				} catch (Exception e) {
+					ServiceLocator.getServiceLocator().getLogger().info("Client " + Client.this.getName() + " disconnected");
 				}
-		}
-
+			}
+		};
+		Thread t = new Thread(r);
+		t.start();
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void send(Message msg) {
-		// TODO Auto-generated method stub
 		try {
 			msg.send(socket);
 		} catch (IOException e) {

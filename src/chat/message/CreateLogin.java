@@ -6,11 +6,11 @@ package chat.message;
 public class CreateLogin extends Message {
 	private String username;
 	private String password;
-
-	public CreateLogin(String[] data) {
-		super(data);
-		this.username = data[0];
-		this.password = data[1];
+	
+	public CreateLogin(String username, String password) {
+		super(new String[]{"CreateLogin", username, password});
+		this.username = username;
+		this.password = password;
 	}
 
 	@Override

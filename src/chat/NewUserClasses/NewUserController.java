@@ -83,11 +83,9 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
     }
     //Erstellt User beim Server und leitet zur LoginView
     private void createUser() {
-    	//TODO würde auch einfacher gehen, in CreateLogin ein Konstruktor der Name und Passwort entgegen nimmt
-    	String[] data = new String[2];
-    	data[0] = view.getNameField().getText();
-    	data[1] = view.getPwField().getText();
-    	CreateLogin createLogin = new CreateLogin(data);
+    	String username = view.getNameField().getText();
+    	String password = view.getPwField().getText();
+    	CreateLogin createLogin = new CreateLogin(username, password);
     	
     	//TODO Listener hinzufügen, um auf einkommende Message für CreateLogin zu reagieren
     	

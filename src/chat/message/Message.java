@@ -68,7 +68,10 @@ public abstract class Message {
 			String messageClassName = Message.class.getPackage().getName() + "." + parts[0];
 			try {
 				Class<?> messageClass = Class.forName(messageClassName);
-				Constructor<?> constructor = messageClass.getConstructor(String[].class);
+				// TODO Logik muss angepasst werden, die Messages wie Result brauchen einen
+				// Konstruktor, welcher ein Array aus Strings entgegen nimmt. Oder evtl. noch besser, hier
+				// wird parts[0] abgeschnitten und das Array aufgesplittet
+ 				Constructor<?> constructor = messageClass.getConstructor(String[].class);
 				msg = (Message) constructor.newInstance(new Object[] { parts });
 				logger.info("Received message of type " + parts[0]);
 			} catch (Exception e) {

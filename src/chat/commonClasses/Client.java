@@ -31,6 +31,8 @@ public class Client implements Sendable {
 
 		boolean valid = false;
 		
+		//TODO Ersetzten, da die Logik sofort durchlofen wird und im finally mit socket.close(); der Socket wider geschlsosen
+		
 		try {
 			socket = new Socket(ipAddress, portNumber);
 
@@ -53,8 +55,8 @@ public class Client implements Sendable {
 							} catch (IOException e) {
 								break;
 							}
-							if (msg == null)
-								break; // In case the server closes the socket
+//							if (msg == null)
+//								break; // In case the server closes the socket
 						}
 					}
 				};

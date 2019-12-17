@@ -1,15 +1,7 @@
 package chat.NewUserClasses;
 
-import java.net.Socket;
-
 import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
-import chat.ChatClasses.ChatModel;
-import chat.ChatClasses.ChatView;
-import chat.ChatRoomClasses.ChatRoomModel;
-import chat.LoginClasses.LoginController;
-import chat.LoginClasses.LoginModel;
-import chat.LoginClasses.LoginView;
 import chat.abstractClasses.Controller;
 import chat.commonClasses.Client;
 import chat.message.CreateLogin;
@@ -17,18 +9,12 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 
-public class NewUserController extends Controller {
+public class NewUserController extends Controller<NewUserModel, NewUserView> {
 	ServiceLocator serviceLocator;
-	String name;
-	String pw;
-	Socket socket;
 
-	
     public NewUserController(NewUserModel model, NewUserView view) {
         super(model, view);
         
@@ -84,9 +70,6 @@ public class NewUserController extends Controller {
 			}
 		});
         
-        this.name = view.getNameField().getText();
-        this.pw = view.getPwField().getText();
-        
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application controller initialized");
     }
@@ -100,31 +83,19 @@ public class NewUserController extends Controller {
     }
     //Erstellt User beim Server und leitet zur LoginView
     private void createUser() {
-    	//TODO Anfrage an Server senden und User empfangen
+    	//TODO würde auch einfacher gehen, in CreateLogin ein Konstruktor der Name und Passwort entgegen nimmt
     	String[] data = new String[2];
-    	data[1]= this.name;
-    	data[2]=this.pw;
+    	data[0] = view.getNameField().getText();
+    	data[1] = view.getPwField().getText();
     	CreateLogin createLogin = new CreateLogin(data);
     	
-    	
     	//TODO Listener hinzufügen, um auf einkommende Message für CreateLogin zu reagieren
+    	
     	Client.getClient().send(createLogin);
+    	
     	//TODO Listener nach empfang der nachricht wieder entfernen
     	
-    	
-    	//TODO Socketverbidnungmachen
-    	//createLogin.send(socket);
-    	/*
-    	if(createLogin.receive(socket)) {
-        	//Logik für zurück auf LoginView
-        	
-        	*/
-        	backLoginView();
-    	/*}
-    	else{
-    		//TODO Try 
-    	};
-    	*/ 	
+    	backLoginView();
 
     }
     

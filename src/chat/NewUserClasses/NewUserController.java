@@ -11,6 +11,7 @@ import chat.LoginClasses.LoginController;
 import chat.LoginClasses.LoginModel;
 import chat.LoginClasses.LoginView;
 import chat.abstractClasses.Controller;
+import chat.message.CreateLogin;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,7 +19,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import message.CreateLogin;
+
 
 public class NewUserController extends Controller {
 	ServiceLocator serviceLocator;

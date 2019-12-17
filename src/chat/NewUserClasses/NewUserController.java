@@ -11,6 +11,7 @@ import chat.LoginClasses.LoginController;
 import chat.LoginClasses.LoginModel;
 import chat.LoginClasses.LoginView;
 import chat.abstractClasses.Controller;
+import chat.commonClasses.Client;
 import chat.message.CreateLogin;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -104,6 +105,12 @@ public class NewUserController extends Controller {
     	data[1]= this.name;
     	data[2]=this.pw;
     	CreateLogin createLogin = new CreateLogin(data);
+    	
+    	
+    	//TODO Listener hinzufügen, um auf einkommende Message für CreateLogin zu reagieren
+    	Client.getClient().send(createLogin);
+    	//TODO Listener nach empfang der nachricht wieder entfernen
+    	
     	
     	//TODO Socketverbidnungmachen
     	//createLogin.send(socket);

@@ -44,11 +44,12 @@ public class Client implements Sendable {
 					@Override
 					public void run() {
 						while (true) {
+							
 							String msg;
 							try {
 								msg = socketIn.readLine();
 								serviceLocator.getLogger().info("Received: " + msg);
-
+								//TODO Einkommende Message verarbeiten (Events für jeden Message Typ (Result, MessageError, MessageText)
 							} catch (IOException e) {
 								break;
 							}

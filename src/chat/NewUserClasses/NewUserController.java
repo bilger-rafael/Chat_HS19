@@ -1,5 +1,8 @@
 package chat.NewUserClasses;
 
+import com.apple.laf.ClientPropertyApplicator.Property;
+import com.sun.media.jfxmedia.logging.Logger;
+
 import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
 import chat.abstractClasses.Controller;
@@ -14,6 +17,7 @@ import javafx.stage.WindowEvent;
 
 public class NewUserController extends Controller<NewUserModel, NewUserView> {
 	ServiceLocator serviceLocator;
+
 
     public NewUserController(NewUserModel model, NewUserView view) {
         super(model, view);
@@ -52,6 +56,7 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
 			}
 		});
 		
+		//Validierung Namenseingabe
 		view.getNameField().textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -69,12 +74,32 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
 				}
 			}
 		});
+		
+		//Schliesst Sitzung falls das Fenster geschlossen wird
+        view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                view.stop();
+                Platform.exit();
+            }
+        });
+        
+        model.newestMessageNewUser.addListener((o,oldValue,newValue) -> {
+        	if (!newValue.isEmpty() ) {
+                //TODO Listener für neue Nachrichten
+            	//boolean b = Boolean.getBoolean(model.newestMessageNewUser.toString());
+            	
+                backLoginViewAfterLogin();
+        		
+        	}
+        });
+
         
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application controller initialized");
     }
     
-    //Leitet zur LoginView
+    //Leitet zur LoginView nach Abbruch
     private void getBackLoginView() {
     	//Logik für zurück auf LoginView
     	view.stop();
@@ -87,19 +112,31 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
     	String password = view.getPwField().getText();
     	CreateLogin createLogin = new CreateLogin(username, password);
     	
-    	//TODO Listener hinzufügen, um auf einkommende Message für CreateLogin zu reagieren
     	
     	Client.getClient().send(createLogin);
     	
-    	//TODO Listener nach empfang der nachricht wieder entfernen
-    	
-    	backLoginView();
 
+    
     }
     
-    private void backLoginView() {
+    //Leitet zur Loginview nach dem Login
+    private void backLoginViewAfterLogin() {
     	view.stop();
-    	JavaFX_App_Template.getMainProgram().getLoginView().setConnectedLabel();
+    	setConnectedInLoginView();
+    	removeListener();
     	JavaFX_App_Template.getMainProgram().getLoginView().start();
+    	
     }
+    
+    //Setzt den Text Connected auf der Login View
+    private void setConnectedInLoginView() {
+    	JavaFX_App_Template.getMainProgram().getLoginView().setConnectedLabel();
+    }
+    
+    private void removeListener() {
+    	//TODO Listener nach empfang der nachricht wieder entfernen
+    	this.model.newestMessageNewUser.unbind();
+    }
+    
+
 }

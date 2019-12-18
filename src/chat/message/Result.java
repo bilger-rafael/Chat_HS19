@@ -11,6 +11,12 @@ public class Result extends Message {
 		super(new String[] {"Result", Boolean.toString(result)});		
 	}
 	
+	//Konstruktur der Array aus Strings entgegennimmt
+	public Result(String[] s) {
+		super(s);
+		
+	}
+	
 	/**
 	 * After a successful login, the result also contains an authentication token
 	 */

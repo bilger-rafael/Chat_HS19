@@ -20,6 +20,7 @@ import javafx.stage.WindowEvent;
 
 public class NewUserController extends Controller<NewUserModel, NewUserView> {
 	ServiceLocator serviceLocator;
+	private int positionInArray = 0;
 
 
     public NewUserController(NewUserModel model, NewUserView view) {
@@ -94,7 +95,7 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
     //Leitet zur LoginView nach Abbruch
     private void getBackLoginView() {
     	//Logik für zurück auf LoginView
-    	view.stop();
+    	this.view.stop();
     	JavaFX_App_Template.getMainProgram().getLoginView().start();
 		
     }
@@ -102,19 +103,23 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
     private void createUser() {
     	String username = view.getNameField().getText();
     	String password = view.getPwField().getText();
+    	
     	CreateLogin createLogin = new CreateLogin(username, password);
     	
     	
-    	Client.getClient().addMsgListener((Message msg) -> {
+    	this.positionInArray = Client.getClient().addMsgListener((Message msg) -> {
     		if(msg instanceof Result) {
 				Result r = (Result)msg;
 				if( r.getType() == ResultType.Simple ) {
 					if(r.getBoolean()) {
+						serviceLocator.getLogger().info("erstellt");
 						backLoginViewAfterLogin();
+				
 					}else {
-						//TODO Fehlermeldung (Username bereits reserviert)
+						JavaFX_App_Template.getMainProgram().getNewUserView().setErrorLabel();
+						serviceLocator.getLogger().info("User gibt es schon");
 					}
-					removeListener();
+					Client.getClient().removeMsgListener(Client.getClient().getMessageListener(positionInArray));
 				}
 			}
     	});
@@ -125,20 +130,17 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
     
     //Leitet zur Loginview nach dem Login
     private void backLoginViewAfterLogin() {
-    	view.stop();
+    	
+    	this.view.stop();
     	setConnectedInLoginView();
     	JavaFX_App_Template.getMainProgram().getLoginView().start();
+    	
     	
     }
     
     //Setzt den Text Connected auf der Login View
     private void setConnectedInLoginView() {
     	JavaFX_App_Template.getMainProgram().getLoginView().setConnectedLabel();
-    }
-    
-    private void removeListener() {
-    	//TODO Listener nach empfang der nachricht wieder entfernen
-    	this.model.newestMessageNewUser.unbind();
     }
     
 

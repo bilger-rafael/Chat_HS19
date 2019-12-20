@@ -194,5 +194,17 @@ public class JavaFX_App_Template extends Application {
 
 		return loginView;
 	}
+	
+	public NewUserView getNewUserView() {
+		if (newUserView == null) {
+			Stage appStage = new Stage();
+			NewUserModel newUserModel = new NewUserModel();
+			newUserView = new NewUserView(appStage, newUserModel);
+
+			new NewUserController(newUserModel, newUserView);
+		}
+
+		return newUserView;
+	}
 
 }

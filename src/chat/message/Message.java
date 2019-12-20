@@ -14,7 +14,7 @@ import chat.commonClasses.Client;
 public abstract class Message {
 	private static Logger logger = Logger.getLogger("");
 	protected MessageType type;
-	private String context;
+
 
 	private String[] data;
 
@@ -22,9 +22,7 @@ public abstract class Message {
 	public Message(String[] data) {
 		this.data = data;
 		String[] s = data;
-		setMessageType(s[0]);
-		setContext(s[1]);
-		
+		setMessageType(s[0]);		
 	}
 	
 	//MessageTyp auslesen
@@ -35,17 +33,6 @@ public abstract class Message {
 			
 		}
 	}
-	
-	//Context setzen
-	private void setContext(String context) {
-		try{
-			this.context = context;
-		}catch (Exception e){
-			
-		}
-	}
-	
-	
 
 	// Special constructor for variable-length messages
 	public Message(String[] data, ArrayList<String> elements) {
@@ -118,8 +105,6 @@ public abstract class Message {
 		return String.join("|", data);
 	}
 	
-	public String getContext() {
-		return this.context;
-	}
+
 	
 }

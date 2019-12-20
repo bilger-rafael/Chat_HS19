@@ -36,7 +36,7 @@ public class NewUserView extends View<NewUserModel> {
 	private Button okButton, cancelButton;
 	private VBox centerBox;
 	private BorderPane bottonBox;
-	private Label nameLabel, pwLabel;
+	private Label nameLabel, pwLabel, errorLabel;
 
 	public NewUserView(Stage stage, NewUserModel model) {
         super(stage, model);
@@ -107,10 +107,13 @@ public class NewUserView extends View<NewUserModel> {
 		
 		centerBox.getChildren().addAll(nameLabel, nameField, pwLabel, pwField, bottonBox);
 		
+		//ErrorLabel
+		errorLabel = new Label();
 		
 		//Borderpane anordnen
 		root.setTop(headMenu);
 		root.setCenter(centerBox);
+		root.setBottom(errorLabel);
 
         
         updateTexts();
@@ -155,6 +158,11 @@ public class NewUserView extends View<NewUserModel> {
 		
 		public TextField getNameField() {
 			return nameField;
+		}
+		
+		public void setErrorLabel() {
+			Translator t = ServiceLocator.getServiceLocator().getTranslator();
+			errorLabel.setText(t.getString("Programm.newUser.errorLabel"));
 		}
 		
 

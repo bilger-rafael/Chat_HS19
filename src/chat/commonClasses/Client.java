@@ -16,13 +16,15 @@ public class Client implements Sendable {
 	private Socket socket;
 	private List<MessageListener> msgListeners = new ArrayList<>();
 
-	public void addMsgListener(MessageListener msgListener) {
+	public int addMsgListener(MessageListener msgListener) {
 		this.msgListeners.add(msgListener);
+		return this.msgListeners.size();
 	}
 	
 	public void removeMsgListener(MessageListener msgListener) {
 		this.msgListeners.remove(msgListener);
 	}	
+	
 
 	public static Client getClient() {
 		if (client == null) {
@@ -70,15 +72,7 @@ public class Client implements Sendable {
 							msgListener.receive(msg);
 						}
 						
-						if(msg instanceof Result) {
-							//TODO Raise ResultRecived
-						}
-						if(msg instanceof MessageError) {
-							//TODO Raise MessageErrorRecived
-						}
-						if(msg instanceof MessageText) {
-							//TODO Raise MessageTextRecived
-						}
+
 					
 					}
 				} catch (Exception e) {
@@ -94,7 +88,8 @@ public class Client implements Sendable {
 
 	@Override
 	public String getName() {
-		return null;
+		String s = "Bilger_Etter_Chat";
+		return s;
 	}
 
 	@Override
@@ -104,6 +99,10 @@ public class Client implements Sendable {
 		} catch (IOException e) {
 			ServiceLocator.getServiceLocator().getLogger().warning("Server unreachable; logged out");
 		}
+	}
+	
+	public MessageListener getMessageListener(int i){
+		return this.msgListeners.get(i);
 	}
 
 }

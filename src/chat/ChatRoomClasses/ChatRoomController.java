@@ -8,6 +8,7 @@ import chat.NewUserClasses.NewUserModel;
 import chat.NewUserClasses.NewUserView;
 import chat.abstractClasses.Controller;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 
@@ -30,7 +31,11 @@ public class ChatRoomController extends Controller<ChatRoomModel, ChatRoomView> 
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application controller initialized");
         
-        view.chatRoomCenter.setItems(model.chatrooms);
+        
+		synchronized(model.chatrooms) {
+			view.chatRoomCenter.setItems(model.chatrooms);
+		}
+        
     }
 
 	private void getBackLoginView() {

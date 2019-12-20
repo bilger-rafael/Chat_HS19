@@ -6,7 +6,7 @@ import chat.commonClasses.Client;
 public class ListChatrooms extends Message {
 	
 	public ListChatrooms() {
-		super(new String[]{"Login", Client.getClient().getToken()});
+		super(new String[]{"ListChatrooms", Client.getClient().getToken()});
 	}
 
 

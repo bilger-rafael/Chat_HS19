@@ -14,21 +14,21 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ChatRoomModel extends Model{
-    ServiceLocator serviceLocator;
-    protected ObservableList<String> chatrooms = FXCollections.observableArrayList();
-    
-    public ChatRoomModel() {
-    	super();
-       
-        serviceLocator = ServiceLocator.getServiceLocator();        
-        serviceLocator.getLogger().info("Application model initialized");
-        
-        refreshChatrooms();
-    }
-    
-    private void refreshChatrooms() {
-    	
+public class ChatRoomModel extends Model {
+	ServiceLocator serviceLocator;
+	protected ObservableList<String> chatrooms = FXCollections.observableArrayList();
+
+	public ChatRoomModel() {
+		super();
+
+		serviceLocator = ServiceLocator.getServiceLocator();
+		serviceLocator.getLogger().info("Application model initialized");
+
+		refreshChatrooms();
+	}
+
+	private void refreshChatrooms() {
+
 		ListChatrooms listChatrooms = new ListChatrooms();
 
 		Client.getClient().addMsgListener(new MessageListener() {
@@ -39,11 +39,11 @@ public class ChatRoomModel extends Model{
 					if (r.getType() == ResultType.List) {
 						if (r.getBoolean()) {
 							serviceLocator.getLogger().info("Chatroom Liste gelesen");
-							Platform.runLater(() -> {
+							synchronized (ChatRoomModel.this.chatrooms) {
 								ChatRoomModel.this.chatrooms = FXCollections.observableArrayList(r.getList());
-							});
+							}
 						} else {
-							//TODO Fehlermeldung anzeigen
+							// TODO Fehlermeldung anzeigen
 							serviceLocator.getLogger().info("Token ungültig");
 						}
 						Client.getClient().removeMsgListener(this);
@@ -55,7 +55,6 @@ public class ChatRoomModel extends Model{
 
 		Client.getClient().send(listChatrooms);
 
-    }
-    
+	}
 
 }

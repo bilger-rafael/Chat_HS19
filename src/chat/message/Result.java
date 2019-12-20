@@ -1,23 +1,34 @@
 package chat.message;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Result extends Message {
 	private ResultType type;
 	private boolean bool;
-	private ArrayList list;
+	private List<String> list;
 	private String token;
 
 	// Konstruktur der Array aus Strings entgegennimmt
 	public Result(String[] s) {
 		super(s);
-		try {
-			this.token = s[2];
-			this.bool = Boolean.parseBoolean(s[1]);
-			this.type = ResultType.Token;
-		} catch (Exception e) {
-			this.bool = Boolean.parseBoolean(s[1]);
+		
+		if (s.length > 1) {
 			this.type = ResultType.Simple;
+			this.bool = Boolean.parseBoolean(s[1]);
+		}
+		
+		if (s.length > 2) {
+			this.type = ResultType.Token;
+			this.token = s[2];
+		}
+		
+		if (s.length > 3) {
+			this.type = ResultType.List;
+			this.token = null;
+			this.list = Arrays.asList(s).stream().skip(2).collect(Collectors.toList());
 		}
 
 	}
@@ -55,7 +66,7 @@ public class Result extends Message {
 		return token;
 	}
 
-	public ArrayList<String> getList() {
+	public List<String> getList() {
 		return list;
 	}
 

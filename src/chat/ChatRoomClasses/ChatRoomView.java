@@ -24,7 +24,7 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	private Menu menuFile, menuEdit, menuLanguage, menuHelp;
 	private MenuItem closeMenuItem, logoutMenuItem;
 	private Label myAccountLabel;	
-	private Button joinButton, newChatButton;
+	private Button joinButton, newChatButton, refreshButton;
 
 	//Liste muss dann ChatroomElemente sein
 	protected ListView<String> chatRoomCenter;
@@ -79,13 +79,16 @@ public class ChatRoomView extends View<ChatRoomModel> {
 		
 		//Botton
 		joinButton = new Button();
+		refreshButton = new Button();
 		newChatButton = new Button();
 		botton = new BorderPane();
 	
 		joinButton.setPrefWidth(150);
+		refreshButton.setPrefWidth(150);
 		newChatButton.setPrefWidth(150);
 		
 		botton.setLeft(newChatButton);
+		botton.setCenter(refreshButton);
 		botton.setRight(joinButton);
 		
 		//Borderpane anordnen
@@ -114,6 +117,7 @@ public class ChatRoomView extends View<ChatRoomModel> {
            myAccountLabel.setText(t.getString("program.chatRoom.myAccount"));
            joinButton.setText(t.getString("program.chatRoom.join"));
            newChatButton.setText(t.getString("program.chatRoom.newChat"));
+           refreshButton.setText(t.getString("program.chatRoom.refresh"));
            
            
 	                   

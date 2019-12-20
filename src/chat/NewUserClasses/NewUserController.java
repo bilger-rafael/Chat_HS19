@@ -8,6 +8,9 @@ import chat.ServiceLocator;
 import chat.abstractClasses.Controller;
 import chat.commonClasses.Client;
 import chat.message.CreateLogin;
+import chat.message.Message;
+import chat.message.Result;
+import chat.message.ResultType;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -84,17 +87,6 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
             }
         });
         
-        model.newestMessageNewUser.addListener((o,oldValue,newValue) -> {
-        	if (!newValue.isEmpty() ) {
-                //TODO Listener für neue Nachrichten
-            	//boolean b = Boolean.getBoolean(model.newestMessageNewUser.toString());
-            	
-                backLoginViewAfterLogin();
-        		
-        	}
-        });
-
-        
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application controller initialized");
     }
@@ -113,17 +105,28 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
     	CreateLogin createLogin = new CreateLogin(username, password);
     	
     	
+    	Client.getClient().addMsgListener((Message msg) -> {
+    		if(msg instanceof Result) {
+				Result r = (Result)msg;
+				if( r.getType() == ResultType.Simple ) {
+					if(r.getBoolean()) {
+						backLoginViewAfterLogin();
+					}else {
+						//TODO Fehlermeldung (Username bereits reserviert)
+					}
+					removeListener();
+				}
+			}
+    	});
+    	
     	Client.getClient().send(createLogin);
     	
-
-    
     }
     
     //Leitet zur Loginview nach dem Login
     private void backLoginViewAfterLogin() {
     	view.stop();
     	setConnectedInLoginView();
-    	removeListener();
     	JavaFX_App_Template.getMainProgram().getLoginView().start();
     	
     }

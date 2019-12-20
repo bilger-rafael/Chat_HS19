@@ -2,16 +2,27 @@ package chat.commonClasses;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
 import chat.ServiceLocator;
 import chat.message.Message;
-import javafx.beans.property.SimpleStringProperty;
+import chat.message.MessageError;
+import chat.message.MessageText;
+import chat.message.Result;
 
 public class Client implements Sendable {
 	private static Client client;
 	private Socket socket;
-	protected SimpleStringProperty newestMessage = new SimpleStringProperty();
+	private List<MessageListener> msgListeners = new ArrayList<>();
 
+	public void addMsgListener(MessageListener msgListener) {
+		this.msgListeners.add(msgListener);
+	}
 	
+	public void removeMsgListener(MessageListener msgListener) {
+		this.msgListeners.remove(msgListener);
+	}	
 
 	public static Client getClient() {
 		if (client == null) {
@@ -50,15 +61,23 @@ public class Client implements Sendable {
 				try {
 					while (true) {
 						Message msg = Message.receive(socket);
-						//TODO Property setzen
-						newestMessage.set("");
-						newestMessage.set(msg.getContext());
 						
 						ServiceLocator.getServiceLocator().getLogger().info("Received: " + msg);
 						// TODO Einkommende Message verarbeiten (Events für jeden Message Typ (Result,
 						// MessageError, MessageText)
-						if(msg.getType() == "Result") {
-							
+						
+						for (MessageListener msgListener : Client.this.msgListeners) {
+							msgListener.receive(msg);
+						}
+						
+						if(msg instanceof Result) {
+							//TODO Raise ResultRecived
+						}
+						if(msg instanceof MessageError) {
+							//TODO Raise MessageErrorRecived
+						}
+						if(msg instanceof MessageText) {
+							//TODO Raise MessageTextRecived
 						}
 					
 					}

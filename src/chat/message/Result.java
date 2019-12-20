@@ -3,32 +3,26 @@ package chat.message;
 import java.util.ArrayList;
 
 public class Result extends Message {
-
-	/**
-	 * This constructor is used by most messages
-	 */
-	public Result(boolean result) {
-		super(new String[] {"Result", Boolean.toString(result)});		
-	}
+	private ResultType type;
+	private boolean bool;
 	
 	//Konstruktur der Array aus Strings entgegennimmt
 	public Result(String[] s) {
 		super(s);
 		
-	}
-	
-	/**
-	 * After a successful login, the result also contains an authentication token
-	 */
-	public Result(boolean result, String token) {
-		super(new String[] {"Result", Boolean.toString(result), token});		
-	}
-	
-	/**
-	 * When a list is requested, the result includes all list values
-	 */
-	public Result(boolean result, ArrayList<String> list) {
-		super(new String[] {"Result", Boolean.toString(result)}, list);		
+		this.bool = Boolean.parseBoolean(s[1]);
+/*
+ * TODO
+ Boolean 
+ Boolean Token 
+ Boolean List
+ 
+ True if the command succeeded, otherwise false
+ After a successful login, also returns the authentication token 
+ When a list is requested, also returns list results
+ */
+		
+		
 	}
 	
 	/**
@@ -36,7 +30,14 @@ public class Result extends Message {
 	 */
 	@Override
 	public void process() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
+	}
+
+	public ResultType getType() {
+		return type;
+	}
+	
+	public boolean getBoolean() {
+		return bool;
 	}
 }

@@ -118,11 +118,6 @@ public abstract class Message {
 		return String.join("|", data);
 	}
 	
-	public String getType() {
-		String s = this.type.name();
-		return s;
-	}
-	
 	public String getContext() {
 		return this.context;
 	}

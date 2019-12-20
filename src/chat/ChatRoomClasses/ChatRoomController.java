@@ -25,6 +25,10 @@ public class ChatRoomController extends Controller {
                 Platform.exit();
             }
         });
+        
+		// Action für CreateChatButton
+		view.getNewChat().setOnAction(e -> createChatRoomCreatView());
+		
         serviceLocator = ServiceLocator.getServiceLocator();        
         serviceLocator.getLogger().info("Application controller initialized");
     }
@@ -36,6 +40,11 @@ public class ChatRoomController extends Controller {
     	view.stop();
     	JavaFX_App_Template.getMainProgram().getLoginView().start();
 		
+	}
+	
+	// Leitet zur CreatUserView
+	private void createChatRoomCreatView() {
+		JavaFX_App_Template.getMainProgram().getChatRoomCreate().start();
 	}
 
 	

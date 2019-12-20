@@ -1,0 +1,148 @@
+package chat.ChatRoomCreateClasses;
+
+import java.util.Locale;
+import java.util.logging.Logger;
+
+import chat.ServiceLocator;
+import chat.abstractClasses.View;
+import chat.commonClasses.Translator;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
+
+	private BorderPane root;
+	private MenuBar headMenu;
+	private Menu menuFile, menuEdit, menuLanguage, menuHelp;
+	private MenuItem closeMenuItem, logoutMenuItem;
+	private TextField nameField;
+	private Button createButton, backButton;
+	private VBox centerBox;
+	private HBox checkBoxArea;
+	private BorderPane bottonBox;
+	private Label nameLabel, isPublic, errorLabel;
+	private CheckBox checkBox;
+
+public ChatRoomCreatView(Stage stage, ChatRoomCreatModel model) {
+	super(stage, model);
+	
+	ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
+
+}
+
+@Override
+protected Scene create_GUI() {
+	ServiceLocator sl = ServiceLocator.getServiceLocator();
+	Logger logger = sl.getLogger();
+
+	this.root = new BorderPane();
+
+	// Top Menuleiste
+	headMenu = new MenuBar();
+
+	menuFile = new Menu();
+	closeMenuItem = new MenuItem();
+	logoutMenuItem = new MenuItem();
+	menuFile.getItems().addAll(closeMenuItem, logoutMenuItem);
+	menuEdit = new Menu();
+	menuHelp = new Menu();
+	menuLanguage = new Menu();
+	menuLanguage.getItems().addAll();
+
+	// Locale setzen
+	for (Locale locale : sl.getLocales()) {
+		MenuItem language = new MenuItem(locale.getLanguage());
+		this.menuLanguage.getItems().add(language);
+		language.setOnAction(event -> {
+			sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
+			sl.setTranslator(new Translator(locale.getLanguage()));
+			updateTexts();
+		});
+	}
+
+	headMenu.getMenus().addAll(menuFile, menuEdit, menuLanguage, menuHelp);
+
+	// Center
+	centerBox = new VBox();
+	nameLabel = new Label();
+	nameField = new TextField();
+
+
+	//CheckboxArea
+	this.checkBox = new CheckBox();	
+	isPublic = new Label();
+	checkBoxArea = new HBox();
+	
+
+	// Botton BorderPane
+	createButton = new Button();
+	backButton = new Button();
+	
+	
+
+	bottonBox = new BorderPane();
+
+	bottonBox.setLeft(backButton);
+	bottonBox.setRight(createButton);
+
+	centerBox.setSpacing(10);
+
+	createButton.setAlignment(Pos.BASELINE_CENTER);
+	backButton.setAlignment(Pos.BASELINE_CENTER);
+
+	nameField.setPrefWidth(250);
+	createButton.setPrefWidth(100);
+	backButton.setPrefWidth(100);
+
+	centerBox.getChildren().addAll(nameLabel, nameField, checkBoxArea, bottonBox);
+
+	errorLabel = new Label();
+	// Borderpane anordnen
+	root.setTop(headMenu);
+	root.setCenter(centerBox);
+	root.setBottom(errorLabel);
+
+	updateTexts();
+
+	Scene scene = new Scene(root);
+	scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
+	return scene;
+}
+
+
+protected void updateTexts() {
+	Translator t = ServiceLocator.getServiceLocator().getTranslator();
+
+	// The menu entries
+	menuFile.setText(t.getString("program.menu.file"));
+	menuLanguage.setText(t.getString("program.menu.file.language"));
+	menuHelp.setText(t.getString("program.menu.help"));
+	closeMenuItem.setText(t.getString("program.menu.file.close"));
+	logoutMenuItem.setText(t.getString("program.menu.file.logout"));
+	menuEdit.setText(t.getString("program.menu.file.edit"));
+	nameLabel.setText(t.getString("programm.ChatRoomCreat.nameLabel"));
+	createButton.setText(t.getString("Programm.ChatRoomCreat.createButton"));
+	backButton.setText(t.getString("Programm.ChatRoomCreat.backButton"));
+	isPublic.setText(t.getString("Programm.ChatRoomCreat.isPublic"));
+
+	stage.setTitle(t.getString("program.name"));
+}
+
+public MenuItem getLogoutMenuItem() {
+	return logoutMenuItem;
+}
+
+}

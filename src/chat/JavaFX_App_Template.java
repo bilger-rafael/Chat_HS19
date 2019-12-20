@@ -6,6 +6,9 @@ import chat.ChatClasses.ChatView;
 import chat.ChatRoomClasses.ChatRoomController;
 import chat.ChatRoomClasses.ChatRoomModel;
 import chat.ChatRoomClasses.ChatRoomView;
+import chat.ChatRoomCreateClasses.ChatRoomCreatController;
+import chat.ChatRoomCreateClasses.ChatRoomCreatModel;
+import chat.ChatRoomCreateClasses.ChatRoomCreatView;
 import chat.LoginClasses.LoginController;
 import chat.LoginClasses.LoginModel;
 import chat.LoginClasses.LoginView;
@@ -37,6 +40,7 @@ public class JavaFX_App_Template extends Application {
 	private ChatView chatView;
 	private ChatRoomView chatRoomView;
 	private NewUserView newUserView;
+	private ChatRoomCreatView chatRoomCreatView;
 
 	private ServiceLocator serviceLocator; // resources, after initialization
 
@@ -203,6 +207,16 @@ public class JavaFX_App_Template extends Application {
 		}
 
 		return chatRoomView;
+	}
+	public ChatRoomCreatView getChatRoomCreate() {
+		if (chatRoomCreatView == null) {
+			Stage stage = new Stage();
+			ChatRoomCreatModel model = new ChatRoomCreatModel();
+			chatRoomCreatView = new ChatRoomCreatView(stage, model);
+			new ChatRoomCreatController(model, chatRoomCreatView);
+		}
+
+		return chatRoomCreatView;
 	}
 
 }

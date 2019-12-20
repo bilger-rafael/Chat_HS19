@@ -126,4 +126,8 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	public MenuItem getLogoutMenuItem() {
 			return logoutMenuItem;
 		}
+	
+	public Button getNewChat() {
+		return newChatButton;
+	}
 }

@@ -164,6 +164,12 @@ public class NewUserView extends View<NewUserModel> {
 			Translator t = ServiceLocator.getServiceLocator().getTranslator();
 			errorLabel.setText(t.getString("Programm.newUser.errorLabel"));
 		}
+		public void resetPwField() {
+			pwField.setText("");
+		}
 		
+		public void resetNameField() {
+			nameField.setText("");
+		}
 
 }

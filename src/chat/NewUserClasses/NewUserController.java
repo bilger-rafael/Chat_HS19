@@ -102,7 +102,6 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
 
 		CreateLogin createLogin = new CreateLogin(username, password);
 		
-		
 		Client.getClient().addMsgListener(new MessageListener() {
 			@Override
 			public void receive(Message msg) {
@@ -126,12 +125,10 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
 		});
 
 		Client.getClient().send(createLogin);
-
 	}
 
 	// Leitet zur Loginview nach dem Login
 	private void backLoginViewAfterLogin() {
-
 		this.view.stop();
 		setConnectedInLoginView();
 		JavaFX_App_Template.getMainProgram().getLoginView().start();

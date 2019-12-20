@@ -3,6 +3,8 @@ package chat.commonClasses;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.List;
 
 import chat.ServiceLocator;
@@ -16,15 +18,13 @@ public class Client implements Sendable {
 	private Socket socket;
 	private List<MessageListener> msgListeners = new ArrayList<>();
 
-	public int addMsgListener(MessageListener msgListener) {
+	public void addMsgListener(MessageListener msgListener) {
 		this.msgListeners.add(msgListener);
-		return this.msgListeners.size();
 	}
-	
+
 	public void removeMsgListener(MessageListener msgListener) {
 		this.msgListeners.remove(msgListener);
-	}	
-	
+	}
 
 	public static Client getClient() {
 		if (client == null) {
@@ -35,21 +35,21 @@ public class Client implements Sendable {
 				client = new Client(new Socket(ipAddress, portNumber));
 				serviceLocator.getLogger().info("Connected");
 			} catch (IOException e) {
-				//TODO Error besser handeln, Programm abbrechen
+				// TODO Error besser handeln, Programm abbrechen
 				e.printStackTrace();
-			} 
+			}
 		}
 		return client;
 	}
 
 	private Client(Socket socket) {
-		
+
 		this.socket = socket;
-		
+
 		_init_reader();
 
 	}
-	
+
 	public Socket getSocket() {
 		return this.socket;
 	}
@@ -63,23 +63,23 @@ public class Client implements Sendable {
 				try {
 					while (true) {
 						Message msg = Message.receive(socket);
-						
+
 						ServiceLocator.getServiceLocator().getLogger().info("Received: " + msg);
 						// TODO Einkommende Message verarbeiten (Events für jeden Message Typ (Result,
 						// MessageError, MessageText)
 						
-						for (MessageListener msgListener : Client.this.msgListeners) {
+						List<MessageListener> tmp = new ArrayList<MessageListener>(Client.this.msgListeners); 
+						
+						for(MessageListener msgListener : tmp) {
 							msgListener.receive(msg);
 						}
-						
-
-					
 					}
 				} catch (Exception e) {
-					ServiceLocator.getServiceLocator().getLogger().info("Client " + Client.this.getName() + " disconnected");
+					ServiceLocator.getServiceLocator().getLogger()
+							.info("Client " + Client.this.getName() + " disconnected");
+					ServiceLocator.getServiceLocator().getLogger().info(e.getMessage());
 				}
 			}
-			
 
 		};
 		Thread t = new Thread(r);
@@ -99,10 +99,6 @@ public class Client implements Sendable {
 		} catch (IOException e) {
 			ServiceLocator.getServiceLocator().getLogger().warning("Server unreachable; logged out");
 		}
-	}
-	
-	public MessageListener getMessageListener(int i){
-		return this.msgListeners.get(i);
 	}
 
 }

@@ -1,12 +1,10 @@
 package chat.NewUserClasses;
 
-import com.apple.laf.ClientPropertyApplicator.Property;
-import com.sun.media.jfxmedia.logging.Logger;
-
 import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
 import chat.abstractClasses.Controller;
 import chat.commonClasses.Client;
+import chat.commonClasses.MessageListener;
 import chat.message.CreateLogin;
 import chat.message.Message;
 import chat.message.Result;
@@ -19,7 +17,6 @@ import javafx.stage.WindowEvent;
 
 public class NewUserController extends Controller<NewUserModel, NewUserView> {
 	ServiceLocator serviceLocator;
-	private int positionInArray = 0;
 
 	public NewUserController(NewUserModel model, NewUserView view) {
 		super(model, view);
@@ -104,24 +101,28 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
 		String password = view.getPwField().getText();
 
 		CreateLogin createLogin = new CreateLogin(username, password);
-
-		this.positionInArray = Client.getClient().addMsgListener((Message msg) -> {
-			if (msg instanceof Result) {
-				Result r = (Result) msg;
-				if (r.getType() == ResultType.Simple) {
-					if (r.getBoolean()) {
-						serviceLocator.getLogger().info("erstellt");
-						Platform.runLater(() -> {
-							backLoginViewAfterLogin();
-						});
-
-					} else {
-						JavaFX_App_Template.getMainProgram().getNewUserView().setErrorLabel();
-						serviceLocator.getLogger().info("User gibt es schon");
+		
+		
+		Client.getClient().addMsgListener(new MessageListener() {
+			@Override
+			public void receive(Message msg) {
+				if (msg instanceof Result) {
+					Result r = (Result) msg;
+					if (r.getType() == ResultType.Simple) {
+						if (r.getBoolean()) {
+							serviceLocator.getLogger().info("erstellt");
+							Platform.runLater(() -> {
+								backLoginViewAfterLogin();
+							});
+						} else {
+							JavaFX_App_Template.getMainProgram().getNewUserView().setErrorLabel();
+							serviceLocator.getLogger().info("User gibt es schon");
+						}
+						Client.getClient().removeMsgListener(this);
 					}
-					Client.getClient().removeMsgListener(Client.getClient().getMessageListener(positionInArray));
 				}
 			}
+			
 		});
 
 		Client.getClient().send(createLogin);

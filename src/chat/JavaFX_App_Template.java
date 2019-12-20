@@ -120,19 +120,6 @@ public class JavaFX_App_Template extends Application {
 		view.start();
 	}
 
-	public void startChatRoom() {
-
-		Stage stage = new Stage();
-		ChatRoomModel model = new ChatRoomModel();
-		chatRoomView = new ChatRoomView(stage, model);
-		new ChatRoomController(model, chatRoomView);
-
-		loginView.stop();
-
-		chatRoomView.start();
-
-	}
-
 	public void startChat() {
 
 	}
@@ -194,7 +181,7 @@ public class JavaFX_App_Template extends Application {
 
 		return loginView;
 	}
-	
+
 	public NewUserView getNewUserView() {
 		if (newUserView == null) {
 			Stage appStage = new Stage();
@@ -205,6 +192,17 @@ public class JavaFX_App_Template extends Application {
 		}
 
 		return newUserView;
+	}
+
+	public ChatRoomView getChatRoom() {
+		if (chatRoomView == null) {
+			Stage stage = new Stage();
+			ChatRoomModel model = new ChatRoomModel();
+			chatRoomView = new ChatRoomView(stage, model);
+			new ChatRoomController(model, chatRoomView);
+		}
+
+		return chatRoomView;
 	}
 
 }

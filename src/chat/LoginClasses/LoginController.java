@@ -11,12 +11,19 @@ import chat.NewUserClasses.NewUserView;
 import chat.abstractClasses.Controller;
 import chat.appClasses.App_Model;
 import chat.appClasses.App_View;
+import chat.commonClasses.Client;
+import chat.commonClasses.MessageListener;
+import chat.message.CreateLogin;
+import chat.message.Login;
+import chat.message.Message;
+import chat.message.Result;
+import chat.message.ResultType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 
-public class LoginController extends Controller {
+public class LoginController extends Controller<LoginModel, LoginView> {
 	ServiceLocator serviceLocator;
 
 	private LoginModel loginModel;
@@ -42,12 +49,43 @@ public class LoginController extends Controller {
 	}
 
 	private void login() {
-    	//TODO Validierung der Eingabe
-    	//TODO Anfrage an Server senden
-    	//TODO Anfrage engegen nehmen
-		JavaFX_App_Template.getMainProgram().startChatRoom();
+		String username = view.getNameField().getText();
+		String password = view.getPwField().getText();
+
+		Login login = new Login(username, password);
+		
+		Client.getClient().addMsgListener(new MessageListener() {
+			@Override
+			public void receive(Message msg) {
+				if (msg instanceof Result) {
+					Result r = (Result) msg;
+					if (r.getType() == ResultType.Token) {
+						if (r.getBoolean()) {
+							serviceLocator.getLogger().info("eingelogt");
+							Client.getClient().setToken(r.getToken());
+							Platform.runLater(() -> {
+								goToChatRoom();
+							});
+						} else {
+							//TODO Fehlermeldung anzeigen
+							//JavaFX_App_Template.getMainProgram().getNewUserView().setErrorLabel();
+							serviceLocator.getLogger().info("Logindaten falsch");
+						}
+						Client.getClient().removeMsgListener(this);
+					}
+				}
+			}
+			
+		});
+
+		Client.getClient().send(login);
 	}
 
+	private void goToChatRoom() {
+		this.view.stop();
+		JavaFX_App_Template.getMainProgram().getChatRoom().start();
+	}
+	
 	// Leitet zur CreatUserView
 	private void createUserView() {
 		JavaFX_App_Template.getMainProgram().startNewUser();

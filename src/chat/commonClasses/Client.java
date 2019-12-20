@@ -17,6 +17,7 @@ public class Client implements Sendable {
 	private static Client client;
 	private Socket socket;
 	private List<MessageListener> msgListeners = new ArrayList<>();
+	private String token;
 
 	public void addMsgListener(MessageListener msgListener) {
 		this.msgListeners.add(msgListener);
@@ -99,6 +100,14 @@ public class Client implements Sendable {
 		} catch (IOException e) {
 			ServiceLocator.getServiceLocator().getLogger().warning("Server unreachable; logged out");
 		}
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }

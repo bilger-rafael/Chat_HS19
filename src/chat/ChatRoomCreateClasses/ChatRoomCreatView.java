@@ -34,116 +34,128 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 	private HBox checkBoxArea;
 	private BorderPane bottonBox;
 	private Label nameLabel, isPublic, errorLabel;
-	private CheckBox checkBox;
+	private CheckBox isPublicCheckBox;
 
-public ChatRoomCreatView(Stage stage, ChatRoomCreatModel model) {
-	super(stage, model);
-	
-	ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
+	public ChatRoomCreatView(Stage stage, ChatRoomCreatModel model) {
+		super(stage, model);
 
-}
+		ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
 
-@Override
-protected Scene create_GUI() {
-	ServiceLocator sl = ServiceLocator.getServiceLocator();
-	Logger logger = sl.getLogger();
-
-	this.root = new BorderPane();
-
-	// Top Menuleiste
-	headMenu = new MenuBar();
-
-	menuFile = new Menu();
-	closeMenuItem = new MenuItem();
-	logoutMenuItem = new MenuItem();
-	menuFile.getItems().addAll(closeMenuItem, logoutMenuItem);
-	menuEdit = new Menu();
-	menuHelp = new Menu();
-	menuLanguage = new Menu();
-	menuLanguage.getItems().addAll();
-
-	// Locale setzen
-	for (Locale locale : sl.getLocales()) {
-		MenuItem language = new MenuItem(locale.getLanguage());
-		this.menuLanguage.getItems().add(language);
-		language.setOnAction(event -> {
-			sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
-			sl.setTranslator(new Translator(locale.getLanguage()));
-			updateTexts();
-		});
 	}
 
-	headMenu.getMenus().addAll(menuFile, menuEdit, menuLanguage, menuHelp);
+	@Override
+	protected Scene create_GUI() {
+		ServiceLocator sl = ServiceLocator.getServiceLocator();
+		Logger logger = sl.getLogger();
 
-	// Center
-	centerBox = new VBox();
-	nameLabel = new Label();
-	nameField = new TextField();
+		this.root = new BorderPane();
 
+		// Top Menuleiste
+		headMenu = new MenuBar();
 
-	//CheckboxArea
-	checkBox = new CheckBox();	
-	isPublic = new Label();
-	checkBoxArea = new HBox();
-	checkBoxArea.getChildren().addAll(checkBox, isPublic);
-	
+		menuFile = new Menu();
+		closeMenuItem = new MenuItem();
+		logoutMenuItem = new MenuItem();
+		menuFile.getItems().addAll(closeMenuItem, logoutMenuItem);
+		menuEdit = new Menu();
+		menuHelp = new Menu();
+		menuLanguage = new Menu();
+		menuLanguage.getItems().addAll();
 
-	// Botton BorderPane
-	createButton = new Button();
-	backButton = new Button();
-	
-	
+		// Locale setzen
+		for (Locale locale : sl.getLocales()) {
+			MenuItem language = new MenuItem(locale.getLanguage());
+			this.menuLanguage.getItems().add(language);
+			language.setOnAction(event -> {
+				sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
+				sl.setTranslator(new Translator(locale.getLanguage()));
+				updateTexts();
+			});
+		}
 
-	bottonBox = new BorderPane();
+		headMenu.getMenus().addAll(menuFile, menuEdit, menuLanguage, menuHelp);
 
-	bottonBox.setLeft(backButton);
-	bottonBox.setRight(createButton);
+		// Center
+		centerBox = new VBox();
+		nameLabel = new Label();
+		nameField = new TextField();
 
-	centerBox.setSpacing(10);
+		// CheckboxArea
+		isPublicCheckBox = new CheckBox();
+		isPublicCheckBox.setSelected(true);
+		isPublic = new Label();
+		checkBoxArea = new HBox();
+		checkBoxArea.getChildren().addAll(getCheckBox(), isPublic);
 
-	createButton.setAlignment(Pos.BASELINE_CENTER);
-	backButton.setAlignment(Pos.BASELINE_CENTER);
+		// Botton BorderPane
+		createButton = new Button();
+		backButton = new Button();
 
-	nameField.setPrefWidth(250);
-	createButton.setPrefWidth(100);
-	backButton.setPrefWidth(100);
+		bottonBox = new BorderPane();
 
-	centerBox.getChildren().addAll(nameLabel, nameField, checkBoxArea, bottonBox);
+		bottonBox.setLeft(getBackButton());
+		bottonBox.setRight(getCreateButton());
 
-	errorLabel = new Label();
-	// Borderpane anordnen
-	root.setTop(headMenu);
-	root.setCenter(centerBox);
-	root.setBottom(errorLabel);
+		centerBox.setSpacing(10);
 
-	updateTexts();
+		getCreateButton().setAlignment(Pos.BASELINE_CENTER);
+		getBackButton().setAlignment(Pos.BASELINE_CENTER);
 
-	Scene scene = new Scene(root);
-	scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
-	return scene;
-}
+		getNameField().setPrefWidth(250);
+		getCreateButton().setPrefWidth(100);
+		getBackButton().setPrefWidth(100);
 
+		centerBox.getChildren().addAll(nameLabel, getNameField(), checkBoxArea, bottonBox);
 
-protected void updateTexts() {
-	Translator t = ServiceLocator.getServiceLocator().getTranslator();
+		errorLabel = new Label();
+		// Borderpane anordnen
+		root.setTop(headMenu);
+		root.setCenter(centerBox);
+		root.setBottom(errorLabel);
 
-	// The menu entries
-	menuFile.setText(t.getString("program.menu.file"));
-	menuLanguage.setText(t.getString("program.menu.file.language"));
-	menuHelp.setText(t.getString("program.menu.help"));
-	closeMenuItem.setText(t.getString("program.menu.file.close"));
-	logoutMenuItem.setText(t.getString("program.menu.file.logout"));
-	menuEdit.setText(t.getString("program.menu.file.edit"));
-	nameLabel.setText(t.getString("programm.ChatRoomCreat.nameLabel"));
-	createButton.setText(t.getString("Programm.ChatRoomCreat.createButton"));
-	backButton.setText(t.getString("Programm.ChatRoomCreat.backButton"));
-	isPublic.setText(t.getString("Programm.ChatRoomCreat.isPublic"));
+		updateTexts();
 
-	stage.setTitle(t.getString("program.name"));
-}
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
+		return scene;
+	}
 
-public MenuItem getLogoutMenuItem() {
-	return logoutMenuItem;
-}
+	protected void updateTexts() {
+		Translator t = ServiceLocator.getServiceLocator().getTranslator();
+
+		// The menu entries
+		menuFile.setText(t.getString("program.menu.file"));
+		menuLanguage.setText(t.getString("program.menu.file.language"));
+		menuHelp.setText(t.getString("program.menu.help"));
+		closeMenuItem.setText(t.getString("program.menu.file.close"));
+		logoutMenuItem.setText(t.getString("program.menu.file.logout"));
+		menuEdit.setText(t.getString("program.menu.file.edit"));
+		nameLabel.setText(t.getString("programm.ChatRoomCreat.nameLabel"));
+		getCreateButton().setText(t.getString("Programm.ChatRoomCreat.createButton"));
+		getBackButton().setText(t.getString("Programm.ChatRoomCreat.backButton"));
+		isPublic.setText(t.getString("Programm.ChatRoomCreat.isPublic"));
+
+		stage.setTitle(t.getString("program.name"));
+	}
+
+	public MenuItem getLogoutMenuItem() {
+		return logoutMenuItem;
+	}
+
+	public TextField getNameField() {
+		return nameField;
+	}
+
+	public CheckBox getCheckBox() {
+		return isPublicCheckBox;
+	}
+
+	public Button getCreateButton() {
+		return createButton;
+	}
+
+	public Button getBackButton() {
+		return backButton;
+	}
 
 }

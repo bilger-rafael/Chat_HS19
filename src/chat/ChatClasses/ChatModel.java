@@ -40,7 +40,6 @@ public class ChatModel extends Model {
 					if (r.getType() == ResultType.Simple) {
 						if (r.getBoolean()) {
 							serviceLocator.getLogger().info("Chatroom beigetreten");
-
 						} else {
 							// TODO Fehlermeldung anzeigen
 							serviceLocator.getLogger().info("Chatroom beitreten fehlgeschlagen");
@@ -64,10 +63,11 @@ public class ChatModel extends Model {
 			public void receive(Message msg) {
 				if (msg instanceof MessageText) {
 					MessageText mt = (MessageText) msg;
-					
-					if (mt.getTargetName() == chatName) {
-						messages.add(mt.getUserName() + ":" + mt.getText());
-					}
+					Platform.runLater(() -> {
+						if (mt.getTargetName() == chatName) {
+							messages.add(mt.getUserName() + ":" + mt.getText());
+						}
+					});
 					// Client.getClient().removeMsgListener(this);
 				}
 			}

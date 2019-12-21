@@ -22,5 +22,17 @@ public class MessageText extends Message {
 	public void process() {
 		// TODO Auto-generated method stub
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public String getText() {
+		return text;
+	}
 	
 }

@@ -97,11 +97,11 @@ public class ChatView extends View<ChatModel> {
 		clearButton = new Button ();
 		
 		
-		entryTextField.setPrefWidth(500);
-		sendButton.setPrefWidth(80);
+		getEntryTextField().setPrefWidth(500);
+		getSendButton().setPrefWidth(80);
 		clearButton.setPrefWidth(80);
 		
-		botton.getChildren().addAll(entryTextField, sendButton, clearButton);
+		botton.getChildren().addAll(getEntryTextField(), getSendButton(), clearButton);
 		
 		
 		
@@ -128,12 +128,20 @@ public class ChatView extends View<ChatModel> {
            menuHelp.setText(t.getString("program.menu.help"));
            closeMenuItem.setText(t.getString("program.menu.file.close"));
            menuEdit.setText(t.getString("program.menu.file.edit"));
-           entryTextField.setText(t.getString("program.chat.entry"));
-           sendButton.setText(t.getString("program.chat.send"));
+           getEntryTextField().setText(t.getString("program.chat.entry"));
+           getSendButton().setText(t.getString("program.chat.send"));
            clearButton.setText(t.getString("program.chat.clear"));
            
            
 	                   
            stage.setTitle(t.getString("program.name"));
 	    }
+
+	public Button getSendButton() {
+		return sendButton;
+	}
+
+	public TextField getEntryTextField() {
+		return entryTextField;
+	}
 }

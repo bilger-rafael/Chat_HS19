@@ -25,9 +25,6 @@ import javafx.stage.Stage;
 public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 
 	private BorderPane root;
-	private MenuBar headMenu;
-	private Menu menuFile, menuEdit, menuLanguage, menuHelp;
-	private MenuItem closeMenuItem, logoutMenuItem;
 	private TextField nameField;
 	private Button createButton, backButton;
 	private VBox centerBox;
@@ -50,30 +47,11 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 
 		this.root = new BorderPane();
 
-		// Top Menuleiste
-		headMenu = new MenuBar();
 
-		menuFile = new Menu();
-		closeMenuItem = new MenuItem();
-		logoutMenuItem = new MenuItem();
-		menuFile.getItems().addAll(closeMenuItem, logoutMenuItem);
-		menuEdit = new Menu();
-		menuHelp = new Menu();
-		menuLanguage = new Menu();
-		menuLanguage.getItems().addAll();
 
-		// Locale setzen
-		for (Locale locale : sl.getLocales()) {
-			MenuItem language = new MenuItem(locale.getLanguage());
-			this.menuLanguage.getItems().add(language);
-			language.setOnAction(event -> {
-				sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
-				sl.setTranslator(new Translator(locale.getLanguage()));
-				updateTexts();
-			});
-		}
+		//akutelle Sprace laden
+		sl.getTranslator().getCurrentLocale();
 
-		headMenu.getMenus().addAll(menuFile, menuEdit, menuLanguage, menuHelp);
 
 		// Center
 		centerBox = new VBox();
@@ -109,7 +87,6 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 
 		errorLabel = new Label();
 		// Borderpane anordnen
-		root.setTop(headMenu);
 		root.setCenter(centerBox);
 		root.setBottom(errorLabel);
 
@@ -124,12 +101,7 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 		Translator t = ServiceLocator.getServiceLocator().getTranslator();
 
 		// The menu entries
-		menuFile.setText(t.getString("program.menu.file"));
-		menuLanguage.setText(t.getString("program.menu.file.language"));
-		menuHelp.setText(t.getString("program.menu.help"));
-		closeMenuItem.setText(t.getString("program.menu.file.close"));
-		logoutMenuItem.setText(t.getString("program.menu.file.logout"));
-		menuEdit.setText(t.getString("program.menu.file.edit"));
+
 		nameLabel.setText(t.getString("programm.ChatRoomCreat.nameLabel"));
 		getCreateButton().setText(t.getString("Programm.ChatRoomCreat.createButton"));
 		getBackButton().setText(t.getString("Programm.ChatRoomCreat.backButton"));
@@ -138,9 +110,6 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 		stage.setTitle(t.getString("program.name"));
 	}
 
-	public MenuItem getLogoutMenuItem() {
-		return logoutMenuItem;
-	}
 
 	public TextField getNameField() {
 		return nameField;

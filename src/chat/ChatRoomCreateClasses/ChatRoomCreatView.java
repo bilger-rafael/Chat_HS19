@@ -11,14 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -47,11 +42,8 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 
 		this.root = new BorderPane();
 
-
-
-		//akutelle Sprace laden
+		//aktuelle Sprace laden
 		sl.getTranslator().getCurrentLocale();
-
 
 		// Center
 		centerBox = new VBox();
@@ -80,12 +72,13 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 		getBackButton().setAlignment(Pos.BASELINE_CENTER);
 
 		getNameField().setPrefWidth(250);
-		getCreateButton().setPrefWidth(100);
-		getBackButton().setPrefWidth(100);
+		getCreateButton().setPrefWidth(150);
+		getBackButton().setPrefWidth(150);
 
 		centerBox.getChildren().addAll(nameLabel, getNameField(), checkBoxArea, bottonBox);
 
 		errorLabel = new Label();
+		
 		// Borderpane anordnen
 		root.setCenter(centerBox);
 		root.setBottom(errorLabel);

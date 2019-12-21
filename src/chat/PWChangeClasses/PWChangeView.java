@@ -77,7 +77,7 @@ public class PWChangeView  extends View<PWChangeModel> {
 		stage.setTitle(t.getString("program.name"));
 	}
 
-	public Button getokButton() {
+	public Button getOkButton() {
 		return okButton;
 	}
 
@@ -87,6 +87,10 @@ public class PWChangeView  extends View<PWChangeModel> {
 
 	public PasswordField getPwField() {
 		return pwField;
+	}
+	
+	public void resetPWField() {
+		pwField.setText("");
 	}
 
 }

@@ -32,25 +32,27 @@ public class ChatRoomController extends Controller<ChatRoomModel, ChatRoomView> 
 		// Action für CreateChatButton
 		view.getNewChat().setOnAction(e -> createChatRoomCreatView());
 		
-        serviceLocator = ServiceLocator.getServiceLocator();        
-        serviceLocator.getLogger().info("Application controller initialized");
-        
         // Action für ChangePassword
-        view.getChangePWMenuItem().setOnAction(e-> CreatPWChangeView());
+        view.getChangePWMenuItem().setOnAction(e-> creatPWChangeView());
         
+        // Action für Refresh
+        view.getRefreshButton().setOnAction(e-> model.refreshChatrooms());
+
 		synchronized(model.chatrooms) {
 			view.chatRoomCenter.setItems(model.chatrooms);
 		}
+		
+        serviceLocator = ServiceLocator.getServiceLocator();        
+        serviceLocator.getLogger().info("Application controller initialized");
         
     }
 
-	private void CreatPWChangeView() {
+	private void creatPWChangeView() {
 		JavaFX_App_Template.getMainProgram().getPWChange().start();
 	}
 
 	private void getBackLoginView() {
 		// TODO Logout mit dem Netzwerk und alle Fenster schliessen
-		
     	//Logik für zurück auf LoginView
     	view.stop();
     	JavaFX_App_Template.getMainProgram().getLoginView().start();
@@ -61,6 +63,5 @@ public class ChatRoomController extends Controller<ChatRoomModel, ChatRoomView> 
 	private void createChatRoomCreatView() {
 		JavaFX_App_Template.getMainProgram().getChatRoomCreate().start();
 	}
-
 	
 }

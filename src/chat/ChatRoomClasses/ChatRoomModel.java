@@ -16,7 +16,7 @@ import javafx.collections.ObservableList;
 
 public class ChatRoomModel extends Model {
 	ServiceLocator serviceLocator;
-	protected ObservableList<String> chatrooms = FXCollections.observableArrayList();
+	public ObservableList<String> chatrooms = FXCollections.observableArrayList();
 
 	public ChatRoomModel() {
 		super();
@@ -27,7 +27,7 @@ public class ChatRoomModel extends Model {
 		refreshChatrooms();
 	}
 
-	private void refreshChatrooms() {
+	public void refreshChatrooms() {
 
 		ListChatrooms listChatrooms = new ListChatrooms();
 

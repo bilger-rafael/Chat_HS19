@@ -99,9 +99,9 @@ public class ChatView extends View<ChatModel> {
 		
 		getEntryTextField().setPrefWidth(500);
 		getSendButton().setPrefWidth(80);
-		clearButton.setPrefWidth(80);
+		getClearButton().setPrefWidth(80);
 		
-		botton.getChildren().addAll(getEntryTextField(), getSendButton(), clearButton);
+		botton.getChildren().addAll(getEntryTextField(), getSendButton(), getClearButton());
 		
 		
 		
@@ -130,7 +130,7 @@ public class ChatView extends View<ChatModel> {
            menuEdit.setText(t.getString("program.menu.file.edit"));
            getEntryTextField().setText(t.getString("program.chat.entry"));
            getSendButton().setText(t.getString("program.chat.send"));
-           clearButton.setText(t.getString("program.chat.clear"));
+           getClearButton().setText(t.getString("program.chat.clear"));
            
            
 	                   
@@ -143,5 +143,9 @@ public class ChatView extends View<ChatModel> {
 
 	public TextField getEntryTextField() {
 		return entryTextField;
+	}
+
+	public Button getClearButton() {
+		return clearButton;
 	}
 }

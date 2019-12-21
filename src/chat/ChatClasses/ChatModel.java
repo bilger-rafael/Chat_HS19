@@ -64,7 +64,7 @@ public class ChatModel extends Model {
 				if (msg instanceof MessageText) {
 					MessageText mt = (MessageText) msg;
 					Platform.runLater(() -> {
-						if (mt.getTargetName() == chatName) {
+						if (mt.getTargetName().equals(chatName)) {
 							messages.add(mt.getUserName() + ":" + mt.getText());
 						}
 					});

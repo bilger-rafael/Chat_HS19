@@ -34,11 +34,18 @@ public class ChatController extends Controller<ChatModel, ChatView> {
 
 		view.chatCenter.setItems(model.messages);
 
-		// Action für CreateUserButton
+		// Action für Send
 		view.getSendButton().setOnAction(e -> sendMessage());
-
+		
+		// Action für Clear
+		view.getClearButton().setOnAction(e -> clearMessage());
+		
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Application controller initialized");
+	}
+	
+	private void clearMessage() {
+		view.getEntryTextField().setText("");
 	}
 	
 	private void sendMessage() {
@@ -51,6 +58,8 @@ public class ChatController extends Controller<ChatModel, ChatView> {
 		SendMessage sendMessage = new SendMessage(model.chatName, message);
 
 		Client.getClient().send(sendMessage);
+		
+		model.messages.add(message);
 		
 		view.getEntryTextField().setText("");
 	}

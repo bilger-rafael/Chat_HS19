@@ -22,7 +22,7 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	private BorderPane root, botton;
 	private MenuBar headMenu;
 	private Menu menuFile, menuEdit, menuLanguage, menuHelp;
-	private MenuItem closeMenuItem, logoutMenuItem;
+	private MenuItem closeMenuItem, logoutMenuItem, changePWMenuItem;
 	private Label myAccountLabel;	
 	private Button joinButton, newChatButton, refreshButton;
 
@@ -53,6 +53,8 @@ public class ChatRoomView extends View<ChatRoomModel> {
 		logoutMenuItem = new MenuItem();
 		menuFile.getItems().addAll(closeMenuItem, logoutMenuItem);
 		menuEdit = new Menu();
+		changePWMenuItem = new MenuItem();
+		menuEdit.getItems().addAll(changePWMenuItem);
 		menuHelp = new Menu();
 		menuLanguage = new Menu();
 		menuLanguage.getItems().addAll();
@@ -114,6 +116,7 @@ public class ChatRoomView extends View<ChatRoomModel> {
            closeMenuItem.setText(t.getString("program.menu.file.close"));
            logoutMenuItem.setText(t.getString("program.menu.file.logout"));
            menuEdit.setText(t.getString("program.menu.file.edit"));
+           changePWMenuItem.setText(t.getString("program.menu.file.edit.ChatRoom.PWChange"));
            myAccountLabel.setText(t.getString("program.chatRoom.myAccount"));
            joinButton.setText(t.getString("program.chatRoom.join"));
            newChatButton.setText(t.getString("program.chatRoom.newChat"));
@@ -129,5 +132,9 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	
 	public Button getNewChat() {
 		return newChatButton;
+	}
+	
+	public MenuItem getChangePWMenuItem() {
+		return changePWMenuItem;
 	}
 }

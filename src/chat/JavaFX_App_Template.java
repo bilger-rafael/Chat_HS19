@@ -15,6 +15,9 @@ import chat.LoginClasses.LoginView;
 import chat.NewUserClasses.NewUserController;
 import chat.NewUserClasses.NewUserModel;
 import chat.NewUserClasses.NewUserView;
+import chat.PWChangeClasses.PWChangeController;
+import chat.PWChangeClasses.PWChangeModel;
+import chat.PWChangeClasses.PWChangeView;
 import chat.abstractClasses.View;
 import chat.appClasses.App_Controller;
 import chat.appClasses.App_Model;
@@ -41,6 +44,7 @@ public class JavaFX_App_Template extends Application {
 	private ChatRoomView chatRoomView;
 	private NewUserView newUserView;
 	private ChatRoomCreatView chatRoomCreatView;
+	private PWChangeView pWChangeView;
 
 	private ServiceLocator serviceLocator; // resources, after initialization
 
@@ -217,6 +221,17 @@ public class JavaFX_App_Template extends Application {
 		}
 
 		return chatRoomCreatView;
+	}
+	
+	public PWChangeView getPWChange() {
+		if (pWChangeView == null) {
+			Stage stage = new Stage();
+			PWChangeModel model = new PWChangeModel();
+			pWChangeView = new PWChangeView(stage, model);
+			new PWChangeController(model, pWChangeView);
+		}
+
+		return pWChangeView;
 	}
 
 }

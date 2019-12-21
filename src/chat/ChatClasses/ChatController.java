@@ -58,9 +58,7 @@ public class ChatController extends Controller<ChatModel, ChatView> {
 		SendMessage sendMessage = new SendMessage(model.chatName, message);
 
 		Client.getClient().send(sendMessage);
-		
-		model.messages.add(message);
-		
+
 		view.getEntryTextField().setText("");
 	}
 

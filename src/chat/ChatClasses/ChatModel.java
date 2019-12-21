@@ -1,10 +1,12 @@
 package chat.ChatClasses;
 
 import chat.ServiceLocator;
+import chat.ChatRoomClasses.ChatRoomModel;
 import chat.abstractClasses.Model;
 import chat.commonClasses.Client;
 import chat.commonClasses.MessageListener;
 import chat.message.JoinChatroom;
+import chat.message.ListChatroomUsers;
 import chat.message.Login;
 import chat.message.Message;
 import chat.message.MessageText;
@@ -18,6 +20,7 @@ public class ChatModel extends Model {
 	ServiceLocator serviceLocator;
 	String chatName;
 	public volatile ObservableList<String> messages = FXCollections.observableArrayList();
+	public volatile ObservableList<String> users = FXCollections.observableArrayList();
 
 	public ChatModel(String chatName) {
 		super();
@@ -31,6 +34,7 @@ public class ChatModel extends Model {
 
 	private void connect() {
 		JoinChatroom joinChatroom = new JoinChatroom(chatName);
+		ListChatroomUsers chatRoomUsers = new ListChatroomUsers(chatName);
 
 		Client.getClient().addMsgListener(new MessageListener() {
 			@Override
@@ -47,6 +51,9 @@ public class ChatModel extends Model {
 						Client.getClient().removeMsgListener(this);
 
 						Client.getClient().addMsgListener(createMessageListener());
+						
+						//Listener UsersOnline
+						Client.getClient().addMsgListener(createOnlineUserListener());
 					}
 				}
 			}
@@ -54,6 +61,12 @@ public class ChatModel extends Model {
 		});
 
 		Client.getClient().send(joinChatroom);
+		Client.getClient().send(chatRoomUsers);
+		
+		OnlineUserUpdater updater = new OnlineUserUpdater(chatRoomUsers);
+		updater.start();
+		
+		
 
 	}
 
@@ -68,6 +81,29 @@ public class ChatModel extends Model {
 							messages.add(mt.getUserName() + ":" + mt.getText());
 						}
 					});
+					// Client.getClient().removeMsgListener(this);
+				}
+			}
+		};
+
+	}
+	
+	private MessageListener createOnlineUserListener() {
+		return new MessageListener() {
+			@Override
+			public void receive(Message msg) {
+				if (msg instanceof Result) {
+					Result r = (Result) msg;
+					if (r.getType() == ResultType.List) {
+						if (r.getBoolean()) {
+							Platform.runLater(() -> {
+								ChatModel.this.users.setAll(r.getList());
+							});
+
+							serviceLocator.getLogger().info("Userliste gelesen");
+						}
+					
+					};
 					// Client.getClient().removeMsgListener(this);
 				}
 			}

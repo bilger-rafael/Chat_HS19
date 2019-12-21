@@ -33,6 +33,8 @@ public class ChatController extends Controller<ChatModel, ChatView> {
 		});
 
 		view.chatCenter.setItems(model.messages);
+		
+		view.userOnlineList.setItems(model.users);
 
 		// Action für Send
 		view.getSendButton().setOnAction(e -> sendMessage());

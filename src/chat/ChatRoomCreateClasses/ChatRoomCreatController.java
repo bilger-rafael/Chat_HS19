@@ -21,8 +21,6 @@ public class ChatRoomCreatController extends Controller<ChatRoomCreatModel, Chat
 	public ChatRoomCreatController(ChatRoomCreatModel model, ChatRoomCreatView view) {
 		super(model, view);
 
-        //Action für Abbrechen
-        view.getLogoutMenuItem().setOnAction( e -> goToChatRoom());
         
         // register ourselves to handle window-closing event
         view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -32,8 +30,6 @@ public class ChatRoomCreatController extends Controller<ChatRoomCreatModel, Chat
             }
         });
         
-        
-        view.getLogoutMenuItem().setOnAction( e -> getBackLoginView());
 		
         view.getBackButton().setOnAction(e -> goToChatRoom());
         

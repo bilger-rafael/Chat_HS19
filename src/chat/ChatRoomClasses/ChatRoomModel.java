@@ -16,7 +16,7 @@ import javafx.collections.ObservableList;
 
 public class ChatRoomModel extends Model {
 	ServiceLocator serviceLocator;
-	public ObservableList<String> chatrooms = FXCollections.observableArrayList();
+	public volatile ObservableList<String> chatrooms = FXCollections.observableArrayList();
 
 	public ChatRoomModel() {
 		super();
@@ -38,10 +38,11 @@ public class ChatRoomModel extends Model {
 					Result r = (Result) msg;
 					if (r.getType() == ResultType.List) {
 						if (r.getBoolean()) {
+							Platform.runLater(() -> {
+								ChatRoomModel.this.chatrooms.setAll(r.getList());
+							});
+
 							serviceLocator.getLogger().info("Chatroom Liste gelesen");
-							synchronized (ChatRoomModel.this.chatrooms) {
-								ChatRoomModel.this.chatrooms = FXCollections.observableArrayList(r.getList());
-							}
 						} else {
 							// TODO Fehlermeldung anzeigen
 							serviceLocator.getLogger().info("Token ungültig");

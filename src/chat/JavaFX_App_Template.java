@@ -209,7 +209,7 @@ public class JavaFX_App_Template extends Application {
 			chatRoomView = new ChatRoomView(stage, model);
 			new ChatRoomController(model, chatRoomView);
 		}
-
+		
 		return chatRoomView;
 	}
 	public ChatRoomCreatView getChatRoomCreate() {

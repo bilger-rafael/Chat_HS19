@@ -82,9 +82,10 @@ protected Scene create_GUI() {
 
 
 	//CheckboxArea
-	this.checkBox = new CheckBox();	
+	checkBox = new CheckBox();	
 	isPublic = new Label();
 	checkBoxArea = new HBox();
+	checkBoxArea.getChildren().addAll(checkBox, isPublic);
 	
 
 	// Botton BorderPane

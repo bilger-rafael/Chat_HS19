@@ -44,25 +44,20 @@ public class PWChangeView  extends View<PWChangeModel> {
 	protected Scene create_GUI() {
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Logger logger = sl.getLogger();
-
+		
+		
+		//akutelle Sprace laden
+		sl.getTranslator().getCurrentLocale();
+		
 		this.root = new VBox();
 
-		/*
-		// Locale setzen
-		for (Locale locale : sl.getLocales()) {
-			MenuItem language = new MenuItem(locale.getLanguage());
-			this.menuLanguage.getItems().add(language);
-			language.setOnAction(event -> {
-				sl.getConfiguration().setLocalOption("Language", locale.getLanguage());
-				sl.setTranslator(new Translator(locale.getLanguage()));
-				updateTexts();
-			});
-		}*/
+
 
 		//Botton Bereich
 		backButton = new Button();
 		okButton = new Button();
 		spacer= new Region();
+		spacer.setMinWidth(60);
 		bottonArea = new HBox();
 		bottonArea.getChildren().addAll(backButton, spacer, okButton);
 		

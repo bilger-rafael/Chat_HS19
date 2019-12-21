@@ -30,8 +30,8 @@ public class PWChangeView  extends View<PWChangeModel> {
 	private PasswordField pwField;
 	private Button backButton, okButton;
 	private Label pwLabel;
-	private HBox root;
-	private VBox bottonArea;
+	private VBox root;
+	private HBox bottonArea;
 	private Region spacer;
 
 	public PWChangeView(Stage stage, PWChangeModel model) {
@@ -45,9 +45,9 @@ public class PWChangeView  extends View<PWChangeModel> {
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
 		Logger logger = sl.getLogger();
 
-		this.root = new HBox();
+		this.root = new VBox();
 
-
+		/*
 		// Locale setzen
 		for (Locale locale : sl.getLocales()) {
 			MenuItem language = new MenuItem(locale.getLanguage());
@@ -57,13 +57,13 @@ public class PWChangeView  extends View<PWChangeModel> {
 				sl.setTranslator(new Translator(locale.getLanguage()));
 				updateTexts();
 			});
-		}
+		}*/
 
 		//Botton Bereich
 		backButton = new Button();
 		okButton = new Button();
 		spacer= new Region();
-		bottonArea = new VBox();
+		bottonArea = new HBox();
 		bottonArea.getChildren().addAll(backButton, spacer, okButton);
 		
 		//Zusammenführen
@@ -71,10 +71,6 @@ public class PWChangeView  extends View<PWChangeModel> {
 		pwField = new PasswordField();
 		root.getChildren().addAll(pwLabel, pwField, bottonArea);
 		
-		
-		
-		
-
 
 		updateTexts();
 
@@ -95,25 +91,16 @@ public class PWChangeView  extends View<PWChangeModel> {
 		stage.setTitle(t.getString("program.name"));
 	}
 
-	/*public Button getLoginButton() {
-		return loginButton;
+	public Button getokButton() {
+		return okButton;
 	}
 
-	public Button getCreateUserButton() {
-		return createUserButton;
-	}
-
-	public void setConnectedLabel() {
-		Translator t = ServiceLocator.getServiceLocator().getTranslator();
-		connectedLabel.setText(t.getString("Programm.login.connectedLabel"));
-	}
-
-	public TextField getNameField() {
-		return nameField;
+	public Button getBackButton() {
+		return backButton;
 	}
 
 	public PasswordField getPwField() {
 		return pwField;
-	}*/
+	}
 
 }

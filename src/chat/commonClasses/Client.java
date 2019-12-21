@@ -18,6 +18,7 @@ public class Client implements Sendable {
 	private Socket socket;
 	private List<MessageListener> msgListeners = new ArrayList<>();
 	private String token;
+	private String username;
 
 	public void addMsgListener(MessageListener msgListener) {
 		this.msgListeners.add(msgListener);
@@ -108,6 +109,14 @@ public class Client implements Sendable {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

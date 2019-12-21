@@ -1,5 +1,9 @@
 package chat;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import chat.ChatClasses.ChatController;
 import chat.ChatClasses.ChatModel;
 import chat.ChatClasses.ChatView;
@@ -40,7 +44,8 @@ public class JavaFX_App_Template extends Application {
 	private static JavaFX_App_Template mainProgram; // singleton
 	private Splash_View splashView;
 	private LoginView loginView;
-	private ChatView chatView;
+	Map<String, ChatView> chatViews = new HashMap<String, ChatView>();
+	//private ArrayList<ChatView> chatViews;
 	private ChatRoomView chatRoomView;
 	private NewUserView newUserView;
 	private ChatRoomCreatView chatRoomCreatView;
@@ -126,10 +131,6 @@ public class JavaFX_App_Template extends Application {
 		splashView = null;
 
 		view.start();
-	}
-
-	public void startChat() {
-
 	}
 
 	public void startNewUser() {
@@ -232,6 +233,20 @@ public class JavaFX_App_Template extends Application {
 		}
 
 		return pWChangeView;
+	}
+	
+	public ChatView getChatView(String chatName) {
+		
+		if(!chatViews.containsKey(chatName)) {
+			Stage stage = new Stage();
+			ChatModel model = new ChatModel(chatName);
+			ChatView chatView = new ChatView(stage, model);
+			new ChatController(model, chatView);
+			chatViews.put(chatName, chatView);
+		}
+		
+		return chatViews.get(chatName);
+		
 	}
 
 }

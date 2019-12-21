@@ -7,6 +7,7 @@ import chat.LoginClasses.LoginView;
 import chat.NewUserClasses.NewUserModel;
 import chat.NewUserClasses.NewUserView;
 import chat.abstractClasses.Controller;
+import chat.message.JoinChatroom;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -38,6 +39,9 @@ public class ChatRoomController extends Controller<ChatRoomModel, ChatRoomView> 
 		// Action für Refresh
 		view.getRefreshButton().setOnAction(e -> model.refreshChatrooms());
 
+		// Action für Join
+		view.getJoinButton().setOnAction(e -> joinChat());
+
 		view.chatRoomCenter.setItems(model.chatrooms);
 
 		serviceLocator = ServiceLocator.getServiceLocator();
@@ -60,6 +64,15 @@ public class ChatRoomController extends Controller<ChatRoomModel, ChatRoomView> 
 	// Leitet zur CreatUserView
 	private void createChatRoomCreatView() {
 		JavaFX_App_Template.getMainProgram().getChatRoomCreate().start();
+	}
+	
+	private void joinChat() {
+		if (view.chatRoomCenter.getSelectionModel().isEmpty()) return;
+		
+		String chatName = view.chatRoomCenter.getSelectionModel().getSelectedItem();
+		
+		JavaFX_App_Template.getMainProgram().getChatView(chatName).start();
+
 	}
 
 }

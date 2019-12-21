@@ -63,6 +63,7 @@ public class LoginController extends Controller<LoginModel, LoginView> {
 						if (r.getBoolean()) {
 							serviceLocator.getLogger().info("eingelogt");
 							Client.getClient().setToken(r.getToken());
+							Client.getClient().setUsername(username);
 							Platform.runLater(() -> {
 								goToChatRoom();
 							});

@@ -81,13 +81,13 @@ public class ChatRoomView extends View<ChatRoomModel> {
 		newChatButton = new Button();
 		botton = new BorderPane();
 
-		joinButton.setPrefWidth(150);
+		getJoinButton().setPrefWidth(150);
 		getRefreshButton().setPrefWidth(150);
 		newChatButton.setPrefWidth(150);
 
 		botton.setLeft(newChatButton);
 		botton.setCenter(getRefreshButton());
-		botton.setRight(joinButton);
+		botton.setRight(getJoinButton());
 
 		// Borderpane anordnen
 		root.setTop(headMenu);
@@ -113,7 +113,7 @@ public class ChatRoomView extends View<ChatRoomModel> {
 		menuEdit.setText(t.getString("program.menu.file.edit"));
 		changePWMenuItem.setText(t.getString("program.menu.file.edit.ChatRoom.PWChange"));
 		myAccountLabel.setText(t.getString("program.chatRoom.myAccount"));
-		joinButton.setText(t.getString("program.chatRoom.join"));
+		getJoinButton().setText(t.getString("program.chatRoom.join"));
 		newChatButton.setText(t.getString("program.chatRoom.newChat"));
 		getRefreshButton().setText(t.getString("program.chatRoom.refresh"));
 
@@ -134,5 +134,9 @@ public class ChatRoomView extends View<ChatRoomModel> {
 
 	public Button getRefreshButton() {
 		return refreshButton;
+	}
+
+	public Button getJoinButton() {
+		return joinButton;
 	}
 }

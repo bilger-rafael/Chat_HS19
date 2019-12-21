@@ -1,22 +1,14 @@
 package chat.PWChangeClasses;
 
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import chat.ServiceLocator;
-import chat.LoginClasses.LoginModel;
 import chat.abstractClasses.View;
 import chat.commonClasses.Translator;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -25,8 +17,7 @@ import javafx.stage.Stage;
 public class PWChangeView  extends View<PWChangeModel> {
 
 
-	private Menu menuFile, menuEdit, menuLanguage, menuHelp;
-	private MenuItem closeMenuItem;
+
 	private PasswordField pwField;
 	private Button backButton, okButton;
 	private Label pwLabel;

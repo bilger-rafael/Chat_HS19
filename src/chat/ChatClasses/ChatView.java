@@ -27,11 +27,11 @@ public class ChatView extends View<ChatModel> {
 	private Menu menuFile, menuEdit, menuLanguage, menuHelp;
 	private MenuItem closeMenuItem;
 	private TextField entryTextField;	
-	private HBox botton;
+	private HBox botton, centerHBox;
 	private Button sendButton, clearButton;
 
 	//Liste muss dann ChatroomElemente sein
-	protected ListView<String> chatCenter;
+	protected ListView<String> chatCenter, userOnlineList;
 
 	public ChatView(Stage stage, ChatModel model) {
         super(stage, model);
@@ -84,14 +84,17 @@ public class ChatView extends View<ChatModel> {
 		
 		
 		//Center
+	    centerHBox = new HBox();
 		chatCenter = new ListView<String>();
+		userOnlineList = new ListView<String>();
+		centerHBox.getChildren().addAll(chatCenter,userOnlineList);
 		
 		
 		//Botton 
 		botton = new HBox();
 		entryTextField = new TextField();
-		sendButton = new Button("send");
-		clearButton = new Button ("clear");
+		sendButton = new Button();
+		clearButton = new Button ();
 		
 		
 		entryTextField.setPrefWidth(500);
@@ -105,14 +108,9 @@ public class ChatView extends View<ChatModel> {
 		//Borderpane anordnen
 		root.setTop(headMenu);
 		root.setBottom(botton);
-		root.setCenter(chatCenter);
+		root.setCenter(centerHBox);
 		
 
-
-	    
-
-	   
-        
         updateTexts();
 		
         Scene scene = new Scene(root);

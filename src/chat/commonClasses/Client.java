@@ -62,9 +62,8 @@ public class Client implements Sendable {
 						Message msg = Message.receive(socket);
 
 						ServiceLocator.getServiceLocator().getLogger().info("Received: " + msg);
-						// TODO Einkommende Message verarbeiten (Events für jeden Message Typ (Result,
-						// MessageError, MessageText)
-						
+
+						//clone array to avoid exception when listener is removed in method receive
 						List<MessageListener> tmp = new ArrayList<MessageListener>(Client.this.msgListeners); 
 						
 						for(MessageListener msgListener : tmp) {

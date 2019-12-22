@@ -40,8 +40,7 @@ public class JavaFX_App_Template extends Application {
 	private static JavaFX_App_Template mainProgram; // singleton
 	private Splash_View splashView;
 	private LoginView loginView;
-	Map<String, ChatView> chatViews = new HashMap<String, ChatView>();
-	//private ArrayList<ChatView> chatViews;
+	private Map<String, ChatView> chatViews = new HashMap<String, ChatView>();
 	private ChatRoomView chatRoomView;
 	private NewUserView newUserView;
 	private ChatRoomCreatView chatRoomCreatView;
@@ -164,6 +163,7 @@ public class JavaFX_App_Template extends Application {
 		}
 
 		// TODO durch Views loopen und wenn View nicht NULL ist, dann xxxView.stop();
+		// TODO Logout
 
 		// More cleanup code as needed
 

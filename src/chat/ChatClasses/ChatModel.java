@@ -5,6 +5,7 @@ import chat.abstractClasses.Model;
 import chat.commonClasses.Client;
 import chat.commonClasses.MessageListener;
 import chat.message.JoinChatroom;
+import chat.message.LeaveChatroom;
 import chat.message.ListChatroomUsers;
 import chat.message.Message;
 import chat.message.MessageText;
@@ -49,8 +50,8 @@ public class ChatModel extends Model {
 						Client.getClient().removeMsgListener(this);
 
 						Client.getClient().addMsgListener(createMessageListener());
-						
-						//Listener UsersOnline
+
+						// Listener UsersOnline
 						Client.getClient().addMsgListener(createOnlineUserListener());
 					}
 				}
@@ -60,12 +61,15 @@ public class ChatModel extends Model {
 
 		Client.getClient().send(joinChatroom);
 		Client.getClient().send(chatRoomUsers);
-		
+
 		OnlineUserUpdater updater = new OnlineUserUpdater(chatRoomUsers);
 		updater.start();
-		
-		
+	}
 
+	protected void disconnect() {
+		LeaveChatroom leaveChatroom = new LeaveChatroom(chatName);
+
+		Client.getClient().send(leaveChatroom);
 	}
 
 	private MessageListener createMessageListener() {
@@ -85,7 +89,7 @@ public class ChatModel extends Model {
 		};
 
 	}
-	
+
 	private MessageListener createOnlineUserListener() {
 		return new MessageListener() {
 			@Override
@@ -100,8 +104,9 @@ public class ChatModel extends Model {
 
 							serviceLocator.getLogger().info("Userliste gelesen");
 						}
-					
-					};
+
+					}
+					;
 					// Client.getClient().removeMsgListener(this);
 				}
 			}

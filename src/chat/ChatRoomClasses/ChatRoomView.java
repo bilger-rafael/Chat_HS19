@@ -1,7 +1,6 @@
 package chat.ChatRoomClasses;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import chat.ServiceLocator;
 import chat.abstractClasses.View;
@@ -18,7 +17,6 @@ import javafx.stage.Stage;
 
 public class ChatRoomView extends View<ChatRoomModel> {
 
-	private ChatRoomModel model;
 	private BorderPane root, botton;
 	private MenuBar headMenu;
 	private Menu menuFile, menuEdit, menuLanguage, menuHelp;
@@ -38,7 +36,6 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	@Override
 	protected Scene create_GUI() {
 		ServiceLocator sl = ServiceLocator.getServiceLocator();
-		Logger logger = sl.getLogger();
 
 		this.root = new BorderPane();
 

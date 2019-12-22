@@ -9,8 +9,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import chat.commonClasses.Client;
-
 public abstract class Message {
 	private static Logger logger = Logger.getLogger("");
 	protected MessageType type;

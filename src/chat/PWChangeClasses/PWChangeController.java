@@ -2,13 +2,10 @@ package chat.PWChangeClasses;
 
 import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
-import chat.LoginClasses.LoginModel;
-import chat.LoginClasses.LoginView;
 import chat.abstractClasses.Controller;
 import chat.commonClasses.Client;
 import chat.commonClasses.MessageListener;
 import chat.message.ChangePassword;
-import chat.message.CreateLogin;
 import chat.message.Message;
 import chat.message.Result;
 import chat.message.ResultType;

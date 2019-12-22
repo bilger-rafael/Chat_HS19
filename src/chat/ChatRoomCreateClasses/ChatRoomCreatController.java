@@ -6,7 +6,6 @@ import chat.abstractClasses.Controller;
 import chat.commonClasses.Client;
 import chat.commonClasses.MessageListener;
 import chat.message.CreateChatroom;
-import chat.message.Login;
 import chat.message.Message;
 import chat.message.Result;
 import chat.message.ResultType;

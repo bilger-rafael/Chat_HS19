@@ -1,11 +1,9 @@
 package chat.ChatRoomClasses;
 
-import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
 import chat.abstractClasses.Model;
 import chat.commonClasses.Client;
 import chat.commonClasses.MessageListener;
-import chat.message.CreateLogin;
 import chat.message.ListChatrooms;
 import chat.message.Message;
 import chat.message.Result;

@@ -1,6 +1,5 @@
 package chat.ChatRoomCreateClasses;
 
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import chat.ServiceLocator;

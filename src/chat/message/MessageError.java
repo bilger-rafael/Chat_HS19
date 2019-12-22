@@ -1,7 +1,5 @@
 package chat.message;
 
-import chat.commonClasses.Client;
-
 public class MessageError extends Message {
 	private String errorContent;
 	

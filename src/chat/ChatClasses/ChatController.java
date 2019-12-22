@@ -1,18 +1,8 @@
 package chat.ChatClasses;
 
 import chat.ServiceLocator;
-import chat.ChatRoomClasses.ChatRoomModel;
-import chat.ChatRoomClasses.ChatRoomView;
-import chat.LoginClasses.LoginModel;
-import chat.LoginClasses.LoginView;
 import chat.abstractClasses.Controller;
 import chat.commonClasses.Client;
-import chat.commonClasses.MessageListener;
-import chat.message.JoinChatroom;
-import chat.message.Message;
-import chat.message.MessageText;
-import chat.message.Result;
-import chat.message.ResultType;
 import chat.message.SendMessage;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

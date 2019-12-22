@@ -2,8 +2,6 @@ package chat.splashScreen;
 
 import chat.JavaFX_App_Template;
 import chat.abstractClasses.Controller;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 
 /**

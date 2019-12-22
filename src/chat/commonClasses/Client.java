@@ -3,15 +3,10 @@ package chat.commonClasses;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 import java.util.List;
 
 import chat.ServiceLocator;
 import chat.message.Message;
-import chat.message.MessageError;
-import chat.message.MessageText;
-import chat.message.Result;
 
 public class Client implements Sendable {
 	private static Client client;

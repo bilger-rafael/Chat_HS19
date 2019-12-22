@@ -2,24 +2,14 @@ package chat.LoginClasses;
 
 import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
-import chat.ChatRoomClasses.ChatRoomController;
-import chat.ChatRoomClasses.ChatRoomModel;
-import chat.ChatRoomClasses.ChatRoomView;
-import chat.NewUserClasses.NewUserController;
-import chat.NewUserClasses.NewUserModel;
-import chat.NewUserClasses.NewUserView;
 import chat.abstractClasses.Controller;
-import chat.appClasses.App_Model;
-import chat.appClasses.App_View;
 import chat.commonClasses.Client;
 import chat.commonClasses.MessageListener;
-import chat.message.CreateLogin;
 import chat.message.Login;
 import chat.message.Message;
 import chat.message.Result;
 import chat.message.ResultType;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 

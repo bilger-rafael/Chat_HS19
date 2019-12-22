@@ -1,13 +1,11 @@
 package chat.ChatClasses;
 
 import chat.ServiceLocator;
-import chat.ChatRoomClasses.ChatRoomModel;
 import chat.abstractClasses.Model;
 import chat.commonClasses.Client;
 import chat.commonClasses.MessageListener;
 import chat.message.JoinChatroom;
 import chat.message.ListChatroomUsers;
-import chat.message.Login;
 import chat.message.Message;
 import chat.message.MessageText;
 import chat.message.Result;

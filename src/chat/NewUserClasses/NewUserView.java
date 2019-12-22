@@ -4,23 +4,18 @@ import java.util.Locale;
 import java.util.logging.Logger;
 
 import chat.ServiceLocator;
-import chat.ChatClasses.ChatModel;
-import chat.ChatRoomClasses.ChatRoomModel;
-import chat.LoginClasses.LoginModel;
 import chat.abstractClasses.View;
 import chat.commonClasses.Translator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 

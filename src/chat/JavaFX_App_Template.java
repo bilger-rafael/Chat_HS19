@@ -1,6 +1,5 @@
 package chat;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,9 +22,6 @@ import chat.PWChangeClasses.PWChangeController;
 import chat.PWChangeClasses.PWChangeModel;
 import chat.PWChangeClasses.PWChangeView;
 import chat.abstractClasses.View;
-import chat.appClasses.App_Controller;
-import chat.appClasses.App_Model;
-import chat.appClasses.App_View;
 import chat.splashScreen.Splash_Controller;
 import chat.splashScreen.Splash_Model;
 import chat.splashScreen.Splash_View;

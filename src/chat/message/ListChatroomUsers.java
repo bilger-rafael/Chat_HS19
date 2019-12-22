@@ -1,7 +1,5 @@
 package chat.message;
 
-import java.util.ArrayList;
-
 import chat.commonClasses.Client;
 
 

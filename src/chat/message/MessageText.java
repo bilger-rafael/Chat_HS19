@@ -1,7 +1,5 @@
 package chat.message;
 
-import chat.commonClasses.Client;
-
 public class MessageText extends Message {
 
 	private String userName;

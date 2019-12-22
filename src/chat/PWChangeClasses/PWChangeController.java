@@ -14,8 +14,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public class PWChangeController extends Controller<PWChangeModel, PWChangeView> {
-	ServiceLocator serviceLocator;
-
 	private PWChangeModel pWChangeModel;
 
 	public PWChangeController(PWChangeModel model, PWChangeView view) {
@@ -60,13 +58,13 @@ public class PWChangeController extends Controller<PWChangeModel, PWChangeView> 
 					Result r = (Result) msg;
 					if (r.getType() == ResultType.Simple) {
 						if (r.getBoolean()) {
-							serviceLocator.getLogger().info("geändert");
+							ServiceLocator.getServiceLocator().getLogger().info("geändert");
 							Platform.runLater(() -> {
 								closePWChangView();
 							});
 						} else {
 							JavaFX_App_Template.getMainProgram().getNewUserView().setErrorLabel();
-							serviceLocator.getLogger().info("User gibt es schon");
+							ServiceLocator.getServiceLocator().getLogger().info("User gibt es schon");
 						}
 						Client.getClient().removeMsgListener(this);
 					}

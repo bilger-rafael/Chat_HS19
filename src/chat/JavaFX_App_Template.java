@@ -177,9 +177,9 @@ public class JavaFX_App_Template extends Application {
 
 	public LoginView getLoginView() {
 		if (loginView == null) {
-			Stage appStage = new Stage();
+			Stage stage = new Stage();
 			LoginModel loginModel = new LoginModel();
-			loginView = new LoginView(appStage, loginModel);
+			loginView = new LoginView(stage, loginModel);
 
 			new LoginController(loginModel, loginView);
 		}
@@ -189,9 +189,9 @@ public class JavaFX_App_Template extends Application {
 
 	public NewUserView getNewUserView() {
 		if (newUserView == null) {
-			Stage appStage = new Stage();
+			Stage stage = new Stage();
 			NewUserModel newUserModel = new NewUserModel();
-			newUserView = new NewUserView(appStage, newUserModel);
+			newUserView = new NewUserView(stage, newUserModel);
 
 			new NewUserController(newUserModel, newUserView);
 		}
@@ -215,6 +215,10 @@ public class JavaFX_App_Template extends Application {
 			ChatRoomCreatModel model = new ChatRoomCreatModel();
 			chatRoomCreatView = new ChatRoomCreatView(stage, model);
 			new ChatRoomCreatController(model, chatRoomCreatView);
+			
+			stage.setOnCloseRequest((e) -> { 
+				chatRoomCreatView.stop();
+			});
 		}
 
 		return chatRoomCreatView;
@@ -226,8 +230,12 @@ public class JavaFX_App_Template extends Application {
 			PWChangeModel model = new PWChangeModel();
 			pWChangeView = new PWChangeView(stage, model);
 			new PWChangeController(model, pWChangeView);
+			
+			stage.setOnCloseRequest((e) -> { 
+				pWChangeView.stop();
+			});
 		}
-
+		
 		return pWChangeView;
 	}
 	
@@ -239,6 +247,10 @@ public class JavaFX_App_Template extends Application {
 			ChatView chatView = new ChatView(stage, model);
 			new ChatController(model, chatView);
 			chatViews.put(chatName, chatView);
+			
+			stage.setOnCloseRequest((e) -> { 
+				chatView.stop();
+			});
 		}
 		
 		return chatViews.get(chatName);

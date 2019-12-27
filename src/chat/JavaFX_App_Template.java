@@ -181,8 +181,8 @@ public class JavaFX_App_Template extends Application {
 			pWChangeView.stop();
 		}
 		
-		if (chatViews != null) {
-			chatViews.forEach((k,v)->v.stop());
+		if (getChatViews() != null) {
+			getChatViews().forEach((k,v)->v.stop());
 		}
 
 		serviceLocator.getLogger().info("Application terminated");
@@ -259,20 +259,24 @@ public class JavaFX_App_Template extends Application {
 	
 	public ChatView getChatView(String chatName) {
 		
-		if(!chatViews.containsKey(chatName)) {
+		if(!getChatViews().containsKey(chatName)) {
 			Stage stage = new Stage();
 			ChatModel model = new ChatModel(chatName);
 			ChatView chatView = new ChatView(stage, model);
 			new ChatController(model, chatView);
-			chatViews.put(chatName, chatView);
+			getChatViews().put(chatName, chatView);
 			
 			stage.setOnCloseRequest((e) -> { 
 				chatView.stop();
 			});
 		}
 		
-		return chatViews.get(chatName);
+		return getChatViews().get(chatName);
 		
+	}
+
+	public Map<String, ChatView> getChatViews() {
+		return chatViews;
 	}
 
 }

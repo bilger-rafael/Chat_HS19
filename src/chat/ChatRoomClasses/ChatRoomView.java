@@ -2,6 +2,7 @@ package chat.ChatRoomClasses;
 
 import java.util.Locale;
 
+import chat.JavaFX_App_Template;
 import chat.ServiceLocator;
 import chat.abstractClasses.View;
 import chat.commonClasses.Translator;
@@ -120,6 +121,8 @@ public class ChatRoomView extends View<ChatRoomModel> {
 	@Override
 	public void stop() {
 		super.stop();
+
+		JavaFX_App_Template.getMainProgram().getChatViews().forEach((k, v) -> v.stop());
 
 		model.logout();
 	}

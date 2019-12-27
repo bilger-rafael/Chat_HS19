@@ -20,6 +20,8 @@ public class ChatModel extends Model {
 	String chatName;
 	public volatile ObservableList<String> messages = FXCollections.observableArrayList();
 	public volatile ObservableList<String> users = FXCollections.observableArrayList();
+	private boolean closed;
+	private Thread updater;
 
 	public ChatModel(String chatName) {
 		super();
@@ -51,22 +53,40 @@ public class ChatModel extends Model {
 
 						Client.getClient().addMsgListener(createMessageListener());
 
-						// Listener UsersOnline
 						Client.getClient().addMsgListener(createOnlineUserListener());
 					}
 				}
 			}
 
 		});
-
+		
 		Client.getClient().send(joinChatroom);
-		Client.getClient().send(chatRoomUsers);
+		
+		// Create thread to update Users periodically 
+		Runnable r = new Runnable() {
 
-		OnlineUserUpdater updater = new OnlineUserUpdater(chatRoomUsers);
+			@Override
+			public void run() {
+				while (!closed) {
+					Client.getClient().send(chatRoomUsers);
+					
+					try {
+						Thread.sleep(6000);
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+
+		};
+		updater = new Thread(r);
+		updater.setDaemon(true);
+		updater.setName("ChatRoomUsers" + chatName);
 		updater.start();
 	}
 
 	protected void disconnect() {
+		closed = true;
+		
 		LeaveChatroom leaveChatroom = new LeaveChatroom(chatName);
 
 		Client.getClient().send(leaveChatroom);
@@ -83,7 +103,6 @@ public class ChatModel extends Model {
 							messages.add(mt.getUserName() + ":" + mt.getText());
 						}
 					});
-					// Client.getClient().removeMsgListener(this);
 				}
 			}
 		};
@@ -101,13 +120,9 @@ public class ChatModel extends Model {
 							Platform.runLater(() -> {
 								ChatModel.this.users.setAll(r.getList());
 							});
-
 							serviceLocator.getLogger().info("Userliste gelesen");
 						}
-
 					}
-					;
-					// Client.getClient().removeMsgListener(this);
 				}
 			}
 		};

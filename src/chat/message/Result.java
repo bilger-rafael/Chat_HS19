@@ -25,7 +25,7 @@ public class Result extends Message {
 			this.token = s[2];
 		}
 		
-		if (s.length > 3) {
+		if (s.length > 3 || this.token.length() != 32) {
 			this.type = ResultType.List;
 			this.token = null;
 			this.list = Arrays.asList(s).stream().skip(2).collect(Collectors.toList());

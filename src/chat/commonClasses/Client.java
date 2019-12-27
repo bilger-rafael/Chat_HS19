@@ -80,6 +80,7 @@ public class Client implements Sendable {
 		};
 		Thread t = new Thread(r);
 		t.setDaemon(true);
+		t.setName("Client");
 		t.start();
 	}
 

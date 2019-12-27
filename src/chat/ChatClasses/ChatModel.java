@@ -20,7 +20,7 @@ public class ChatModel extends Model {
 	String chatName;
 	public volatile ObservableList<String> messages = FXCollections.observableArrayList();
 	public volatile ObservableList<String> users = FXCollections.observableArrayList();
-	private boolean closed;
+	private volatile boolean connected = true;
 	private Thread updater;
 
 	public ChatModel(String chatName) {
@@ -35,8 +35,7 @@ public class ChatModel extends Model {
 
 	private void connect() {
 		JoinChatroom joinChatroom = new JoinChatroom(chatName);
-		ListChatroomUsers chatRoomUsers = new ListChatroomUsers(chatName);
-
+		
 		Client.getClient().addMsgListener(new MessageListener() {
 			@Override
 			public void receive(Message msg) {
@@ -45,48 +44,31 @@ public class ChatModel extends Model {
 					if (r.getType() == ResultType.Simple) {
 						if (r.getBoolean()) {
 							serviceLocator.getLogger().info("Chatroom beigetreten");
+							
+							Client.getClient().addMsgListener(createMessageListener());
+
+							Client.getClient().addMsgListener(createOnlineUserListener());
+							
+							startUserUpdater();
 						} else {
 							// TODO Fehlermeldung anzeigen
 							serviceLocator.getLogger().info("Chatroom beitreten fehlgeschlagen");
+							
+							connected = false;
 						}
 						Client.getClient().removeMsgListener(this);
-
-						Client.getClient().addMsgListener(createMessageListener());
-
-						Client.getClient().addMsgListener(createOnlineUserListener());
 					}
 				}
 			}
 
 		});
-		
+
 		Client.getClient().send(joinChatroom);
-		
-		// Create thread to update Users periodically 
-		Runnable r = new Runnable() {
-
-			@Override
-			public void run() {
-				while (!closed) {
-					Client.getClient().send(chatRoomUsers);
-					
-					try {
-						Thread.sleep(6000);
-					} catch (InterruptedException e) {
-					}
-				}
-			}
-
-		};
-		updater = new Thread(r);
-		updater.setDaemon(true);
-		updater.setName("ChatRoomUsers" + chatName);
-		updater.start();
 	}
 
 	protected void disconnect() {
-		closed = true;
-		
+		connected = false;
+
 		LeaveChatroom leaveChatroom = new LeaveChatroom(chatName);
 
 		Client.getClient().send(leaveChatroom);
@@ -107,6 +89,29 @@ public class ChatModel extends Model {
 			}
 		};
 
+	}
+	
+	private void startUserUpdater() {
+		ListChatroomUsers chatRoomUsers = new ListChatroomUsers(chatName);
+
+		// Create thread to update Users periodically
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				while (connected) {
+					Client.getClient().send(chatRoomUsers);
+
+					try {
+						Thread.sleep(6000);
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+		};
+		updater = new Thread(r);
+		updater.setDaemon(true);
+		updater.setName("ChatRoomUsers" + chatName);
+		updater.start();
 	}
 
 	private MessageListener createOnlineUserListener() {

@@ -14,18 +14,18 @@ public class Result extends Message {
 	// Konstruktur der Array aus Strings entgegennimmt
 	public Result(String[] s) {
 		super(s);
-		
+
 		if (s.length > 1) {
 			this.type = ResultType.Simple;
 			this.bool = Boolean.parseBoolean(s[1]);
 		}
-		
+
 		if (s.length > 2) {
 			this.type = ResultType.Token;
 			this.token = s[2];
 		}
-		
-		if (s.length > 3 || this.token.length() != 32) {
+
+		if (s.length > 3 || (s.length == 3 && this.token.length() != 32)) {
 			this.type = ResultType.List;
 			this.token = null;
 			this.list = Arrays.asList(s).stream().skip(2).collect(Collectors.toList());

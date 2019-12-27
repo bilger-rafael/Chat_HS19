@@ -116,7 +116,7 @@ public class ChatRoomView extends View<ChatRoomModel> {
 
 		stage.setTitle(t.getString("program.name"));
 	}
-	
+
 	@Override
 	public void stop() {
 		super.stop();

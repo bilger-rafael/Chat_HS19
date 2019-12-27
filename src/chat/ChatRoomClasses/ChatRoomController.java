@@ -35,6 +35,9 @@ public class ChatRoomController extends Controller<ChatRoomModel, ChatRoomView> 
 
 		// Action für Join
 		view.getJoinButton().setOnAction(e -> joinChat());
+		
+		// Action für Logout
+		view.getLogoutMenuItem().setOnAction(e -> logout());
 
 		view.chatRoomCenter.setItems(model.chatrooms);
 
@@ -67,6 +70,12 @@ public class ChatRoomController extends Controller<ChatRoomModel, ChatRoomView> 
 		
 		JavaFX_App_Template.getMainProgram().getChatView(chatName).start();
 
+	}
+	
+	private void logout() {
+		this.view.stop();
+		
+		JavaFX_App_Template.getMainProgram().getLoginView().start();
 	}
 
 }

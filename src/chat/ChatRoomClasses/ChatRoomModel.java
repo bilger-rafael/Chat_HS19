@@ -5,6 +5,7 @@ import chat.abstractClasses.Model;
 import chat.commonClasses.Client;
 import chat.commonClasses.MessageListener;
 import chat.message.ListChatrooms;
+import chat.message.Logout;
 import chat.message.Message;
 import chat.message.Result;
 import chat.message.ResultType;
@@ -55,11 +56,13 @@ public class ChatRoomModel extends Model {
 		Client.getClient().send(listChatrooms);
 
 	}
-	
+
 	public void logout() {
-		
-		
-		
+
+		Logout logout = new Logout();
+
+		Client.getClient().send(logout);
+
 	}
 
 }

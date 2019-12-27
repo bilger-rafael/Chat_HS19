@@ -158,14 +158,32 @@ public class JavaFX_App_Template extends Application {
 		serviceLocator.getConfiguration().save();
 
 		if (loginView != null) {
-			// Make the view invisible
 			loginView.stop();
 		}
-
-		// TODO durch Views loopen und wenn View nicht NULL ist, dann xxxView.stop();
-		// TODO Logout
-
-		// More cleanup code as needed
+		
+		if (splashView != null) {
+			splashView.stop();
+		}
+		
+		if (chatRoomView != null) {
+			chatRoomView.stop();
+		}
+		
+		if (newUserView != null) {
+			newUserView.stop();
+		}
+		
+		if (chatRoomCreatView != null) {
+			chatRoomCreatView.stop();
+		}
+		
+		if (pWChangeView != null) {
+			pWChangeView.stop();
+		}
+		
+		if (chatViews != null) {
+			chatViews.forEach((k,v)->v.stop());
+		}
 
 		serviceLocator.getLogger().info("Application terminated");
 	}

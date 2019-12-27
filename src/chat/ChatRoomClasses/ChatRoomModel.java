@@ -55,5 +55,11 @@ public class ChatRoomModel extends Model {
 		Client.getClient().send(listChatrooms);
 
 	}
+	
+	public void logout() {
+		
+		
+		
+	}
 
 }

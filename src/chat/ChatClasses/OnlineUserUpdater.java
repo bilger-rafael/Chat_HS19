@@ -8,6 +8,7 @@ public class OnlineUserUpdater extends Thread {
 	
 	public OnlineUserUpdater(ListChatroomUsers chatRoomUsers) {
 		this.chatRoomUsers = chatRoomUsers;
+		this.setDaemon(true);
 	}
 	
 	@Override

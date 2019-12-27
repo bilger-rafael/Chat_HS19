@@ -4,7 +4,7 @@ import chat.commonClasses.Client;
 
 public class DeleteLogin extends Message {
 
-	public DeleteLogin(String[] data) {
+	public DeleteLogin() {
 		super(new String[] { "DeleteLogin", Client.getClient().getToken() });
 	}
 

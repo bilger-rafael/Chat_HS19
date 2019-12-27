@@ -29,6 +29,9 @@ public class ChatRoomController extends Controller<ChatRoomModel, ChatRoomView> 
 
 		// Action für ChangePassword
 		view.getChangePWMenuItem().setOnAction(e -> creatPWChangeView());
+		
+		// Action für DeleteUser
+		view.getDeleteUserMenuItem().setOnAction(e -> deleteUser());
 
 		// Action für Refresh
 		view.getRefreshButton().setOnAction(e -> model.refreshChatrooms());
@@ -48,6 +51,12 @@ public class ChatRoomController extends Controller<ChatRoomModel, ChatRoomView> 
 
 	private void creatPWChangeView() {
 		JavaFX_App_Template.getMainProgram().getPWChange().start();
+	}
+	
+	private void deleteUser() {
+		this.model.deleteUser();
+		
+		logout();
 	}
 
 	private void getBackLoginView() {

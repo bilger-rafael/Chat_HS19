@@ -4,6 +4,7 @@ import chat.ServiceLocator;
 import chat.abstractClasses.Model;
 import chat.commonClasses.Client;
 import chat.commonClasses.MessageListener;
+import chat.message.DeleteLogin;
 import chat.message.ListChatrooms;
 import chat.message.Logout;
 import chat.message.Message;
@@ -62,6 +63,14 @@ public class ChatRoomModel extends Model {
 		Logout logout = new Logout();
 
 		Client.getClient().send(logout);
+
+	}
+	
+	public void deleteUser() {
+
+		DeleteLogin deleteLogin = new DeleteLogin();
+
+		Client.getClient().send(deleteLogin);
 
 	}
 

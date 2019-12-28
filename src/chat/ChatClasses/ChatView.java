@@ -14,6 +14,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class ChatView extends View<ChatModel> {
@@ -25,6 +26,7 @@ public class ChatView extends View<ChatModel> {
 	private TextField entryTextField;
 	private HBox botton, centerHBox;
 	private Button sendButton, clearButton;
+	private Region spacer1, spacer2;
 
 	// Liste muss dann ChatroomElemente sein
 	protected ListView<String> chatCenter, userOnlineList;
@@ -73,20 +75,26 @@ public class ChatView extends View<ChatModel> {
 		// Center
 		centerHBox = new HBox();
 		chatCenter = new ListView<String>();
+		chatCenter.setPrefWidth(500);
 		userOnlineList = new ListView<String>();
+		userOnlineList.setMaxWidth(180);
 		centerHBox.getChildren().addAll(chatCenter, userOnlineList);
 
 		// Botton
 		botton = new HBox();
 		entryTextField = new TextField();
+		spacer1 = new Region();
+		spacer1.setMinWidth(10);
 		sendButton = new Button();
+		spacer2 = new Region();
+		spacer2.setMinWidth(10);
 		clearButton = new Button();
 
 		getEntryTextField().setPrefWidth(500);
 		getSendButton().setPrefWidth(80);
 		getClearButton().setPrefWidth(80);
 
-		botton.getChildren().addAll(getEntryTextField(), getSendButton(), getClearButton());
+		botton.getChildren().addAll(getEntryTextField(), spacer1, getSendButton(),spacer2, getClearButton());
 
 		// Borderpane anordnen
 		root.setTop(headMenu);

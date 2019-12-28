@@ -32,6 +32,33 @@ public class ChatModel extends Model {
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Application model initialized");
 	}
+	
+	protected void reconnect() {
+		connected = true;
+		JoinChatroom joinChatroom = new JoinChatroom(chatName);
+		Client.getClient().addMsgListener(new MessageListener() {
+			@Override
+			public void receive(Message msg) {
+				if (msg instanceof Result) {
+					Result r = (Result) msg;
+					if (r.getType() == ResultType.Simple) {
+						if (r.getBoolean()) {
+							serviceLocator.getLogger().info("Chatroom wieder beigetreten");
+							
+						} else {
+							// TODO Fehlermeldung anzeigen
+							serviceLocator.getLogger().info("Chatroom beitreten fehlgeschlagen");
+							
+							connected = false;
+						}
+						Client.getClient().removeMsgListener(this);
+					}
+				}
+			}
+
+		});
+		Client.getClient().send(joinChatroom);
+	}
 
 	private void connect() {
 		JoinChatroom joinChatroom = new JoinChatroom(chatName);

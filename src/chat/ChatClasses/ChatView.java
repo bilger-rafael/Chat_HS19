@@ -122,6 +122,12 @@ public class ChatView extends View<ChatModel> {
 
 		model.disconnect();
 	}
+	
+	@Override
+	public void start() {
+		super.start();
+		model.reconnect();
+	}
 
 	public Button getSendButton() {
 		return sendButton;
@@ -133,5 +139,9 @@ public class ChatView extends View<ChatModel> {
 
 	public Button getClearButton() {
 		return clearButton;
+	}
+	
+	public MenuItem getCloseMenuItem() {
+		return closeMenuItem;
 	}
 }

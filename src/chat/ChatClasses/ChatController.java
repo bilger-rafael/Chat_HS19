@@ -18,6 +18,7 @@ public class ChatController extends Controller<ChatModel, ChatView> {
 		view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
+				model.disconnect();
 				Platform.exit();
 			}
 		});
@@ -31,6 +32,9 @@ public class ChatController extends Controller<ChatModel, ChatView> {
 		
 		// Action für Clear
 		view.getClearButton().setOnAction(e -> clearMessage());
+		
+		// Action für Schliessen
+		view.getCloseMenuItem().setOnAction(e -> closeView());
 		
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Application controller initialized");
@@ -52,6 +56,11 @@ public class ChatController extends Controller<ChatModel, ChatView> {
 		Client.getClient().send(sendMessage);
 
 		view.getEntryTextField().setText("");
+	}
+	
+	private void closeView() {
+		model.disconnect();
+		view.stop();
 	}
 
 }

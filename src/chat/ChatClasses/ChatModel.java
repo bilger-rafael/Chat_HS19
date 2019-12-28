@@ -1,8 +1,11 @@
 package chat.ChatClasses;
 
+import java.io.Serializable;
+
 import chat.ServiceLocator;
 import chat.abstractClasses.Model;
 import chat.commonClasses.Client;
+import chat.commonClasses.DataMgt;
 import chat.commonClasses.MessageListener;
 import chat.message.JoinChatroom;
 import chat.message.LeaveChatroom;
@@ -17,7 +20,8 @@ import javafx.collections.ObservableList;
 
 public class ChatModel extends Model {
 	ServiceLocator serviceLocator;
-	String chatName;
+	DataMgt dataMgt;
+	protected String chatName;
 	public volatile ObservableList<String> messages = FXCollections.observableArrayList();
 	public volatile ObservableList<String> users = FXCollections.observableArrayList();
 	private volatile boolean connected = true;
@@ -28,6 +32,11 @@ public class ChatModel extends Model {
 		this.chatName = chatName;
 
 		connect();
+		
+		//TODO
+		//dataMgt = DataMgt.getDataMgt();
+		//Daten laden
+		//messages = DataMgt.getDataMgt().loadChat(chatName);
 
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Application model initialized");
@@ -62,7 +71,6 @@ public class ChatModel extends Model {
 
 	private void connect() {
 		JoinChatroom joinChatroom = new JoinChatroom(chatName);
-		
 		Client.getClient().addMsgListener(new MessageListener() {
 			@Override
 			public void receive(Message msg) {
@@ -95,6 +103,9 @@ public class ChatModel extends Model {
 
 	protected void disconnect() {
 		connected = false;
+		
+		//TODO correct Error
+		//dataMgt.getDataMgt().saveChat(this.chatName, messages);
 
 		LeaveChatroom leaveChatroom = new LeaveChatroom(chatName);
 

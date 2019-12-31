@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import chat.ServiceLocator;
 import chat.abstractClasses.View;
 import chat.commonClasses.Translator;
+import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 
@@ -24,8 +26,10 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 	private VBox centerBox;
 	private HBox checkBoxArea;
 	private BorderPane bottonBox;
-	private Label nameLabel, isPublic, errorLabel;
+	private Label nameLabel, isPublic;
 	private CheckBox isPublicCheckBox;
+	private Label message;
+	private FadeTransition transition;
 
 	public ChatRoomCreatView(Stage stage, ChatRoomCreatModel model) {
 		super(stage, model);
@@ -76,11 +80,14 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 
 		centerBox.getChildren().addAll(nameLabel, getNameField(), checkBoxArea, bottonBox);
 
-		errorLabel = new Label();
+		//Nachricht, falls Login fehlgeschlagen
+		message = new Label("");
+		message.setId("message");
+		message.setOpacity(0);
 		
 		// Borderpane anordnen
 		root.setCenter(centerBox);
-		root.setBottom(errorLabel);
+		root.setBottom(message);
 
 		updateTexts();
 
@@ -98,8 +105,25 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 		getCreateButton().setText(t.getString("Programm.ChatRoomCreat.createButton"));
 		getBackButton().setText(t.getString("Programm.ChatRoomCreat.backButton"));
 		isPublic.setText(t.getString("Programm.ChatRoomCreat.isPublic"));
+		message.setText(t.getString("Programm.ChatRoomCreate.message"));
 
 		stage.setTitle(t.getString("program.name"));
+	}
+	
+	protected void showError() {
+		Translator t = ServiceLocator.getServiceLocator().getTranslator();
+		message.setText(t.getString("Programm.ChatRoomCreate.message"));
+		
+		if( transition == null ) {
+			transition = new FadeTransition(Duration.millis(2000), message);
+			transition.setFromValue(1.0);
+			transition.setToValue(0);
+			transition.setDelay(Duration.millis(2000));
+		}
+		
+		transition.stop();
+		message.setOpacity(1);
+		transition.play();
 	}
 
 

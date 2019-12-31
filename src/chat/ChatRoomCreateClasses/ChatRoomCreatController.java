@@ -57,10 +57,14 @@ public class ChatRoomCreatController extends Controller<ChatRoomCreatModel, Chat
 								goToChatRoom();
 							});
 						} else {
-							//TODO Fehlermeldung anzeigen
-							serviceLocator.getLogger().info("Name bereits reserviert");
+
 						}
 						Client.getClient().removeMsgListener(this);
+					}
+					//Fehlermeldung anzeigen
+					if( r.getType() == ResultType.Simple && r.getBoolean() == false) {
+					view.showError();
+					serviceLocator.getLogger().info("Name bereits reserviert");
 					}
 				}
 			}

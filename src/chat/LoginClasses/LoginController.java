@@ -58,13 +58,17 @@ public class LoginController extends Controller<LoginModel, LoginView> {
 								goToChatRoom();
 							});
 						} else {
-							//TODO Fehlermeldung anzeigen
-							//JavaFX_App_Template.getMainProgram().getNewUserView().setErrorLabel();
-							serviceLocator.getLogger().info("Logindaten falsch");
+
 						}
 						Client.getClient().removeMsgListener(this);
 					}
+					//Fehlermeldung anzeigen
+					if( r.getType() == ResultType.Simple && r.getBoolean() == false) {
+					view.showError();
+					serviceLocator.getLogger().info("Logindaten falsch");
+					}
 				}
+				
 			}
 			
 		});

@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import chat.ServiceLocator;
 import chat.abstractClasses.View;
 import chat.commonClasses.Translator;
+import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,8 +17,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class LoginView extends View<LoginModel> {
 
@@ -32,6 +36,9 @@ public class LoginView extends View<LoginModel> {
 	private VBox centerBox;
 	private BorderPane bottonBox;
 	private Label nameLabel, pwLabel, connectedLabel;
+	private Label message;
+	private FadeTransition transition;
+	private HBox messageBox;
 
 	public LoginView(Stage stage, LoginModel model) {
 		super(stage, model);
@@ -98,11 +105,24 @@ public class LoginView extends View<LoginModel> {
 
 		centerBox.getChildren().addAll(nameLabel, getNameField(), pwLabel, getPwField(), bottonBox);
 
+		messageBox = new HBox();
 		connectedLabel = new Label();
+		connectedLabel.setId("connectedLabel");
+		connectedLabel.setOpacity(0);
+		messageBox.getChildren().add(connectedLabel);
+
+		
+		//Nachricht, falls Login fehlgeschlagen
+		message = new Label("");
+		message.setId("message");
+		message.setOpacity(0);
+		messageBox.getChildren().add(message);
+		
+		
 		// Borderpane anordnen
 		root.setTop(headMenu);
 		root.setCenter(centerBox);
-		root.setBottom(connectedLabel);
+		root.setBottom(messageBox);
 
 		updateTexts();
 
@@ -124,8 +144,26 @@ public class LoginView extends View<LoginModel> {
 		pwLabel.setText(t.getString("Programm.login.pwLabel"));
 		loginButton.setText(t.getString("Programm.login.loginButton"));
 		createUserButton.setText(t.getString("Programm.login.createUserButton"));
-
+		message.setText(t.getString("Programm.login.message"));
+		connectedLabel.setText(t.getString("Programm.login.connectedLabel"));
 		stage.setTitle(t.getString("program.name"));
+		
+	}
+	
+	protected void showError() {
+		Translator t = ServiceLocator.getServiceLocator().getTranslator();
+		message.setText(t.getString("Programm.login.message"));
+		
+		if( transition == null ) {
+			transition = new FadeTransition(Duration.millis(2000), message);
+			transition.setFromValue(1.0);
+			transition.setToValue(0);
+			transition.setDelay(Duration.millis(2000));
+		}
+		
+		transition.stop();
+		message.setOpacity(1);
+		transition.play();
 	}
 
 	public Button getLoginButton() {
@@ -139,6 +177,17 @@ public class LoginView extends View<LoginModel> {
 	public void setConnectedLabel() {
 		Translator t = ServiceLocator.getServiceLocator().getTranslator();
 		connectedLabel.setText(t.getString("Programm.login.connectedLabel"));
+		
+		if( transition == null ) {
+			transition = new FadeTransition(Duration.millis(2000), connectedLabel);
+			transition.setFromValue(1.0);
+			transition.setToValue(0);
+			transition.setDelay(Duration.millis(2000));
+		}
+		
+		transition.stop();
+		connectedLabel.setOpacity(1);
+		transition.play();
 	}
 
 	public TextField getNameField() {

@@ -33,7 +33,7 @@ public class ChatRoomCreatView extends View<ChatRoomCreatModel> {
 
 	public ChatRoomCreatView(Stage stage, ChatRoomCreatModel model) {
 		super(stage, model);
-
+		stage.setTitle("Chat Bilger-Etter");
 		ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
 
 	}

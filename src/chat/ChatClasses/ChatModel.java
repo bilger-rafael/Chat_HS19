@@ -42,6 +42,10 @@ public class ChatModel extends Model {
 		serviceLocator.getLogger().info("Application model initialized");
 	}
 	
+	public String getChatName() {
+		return chatName;
+	}
+
 	protected void reconnect() {
 		connected = true;
 		JoinChatroom joinChatroom = new JoinChatroom(chatName);

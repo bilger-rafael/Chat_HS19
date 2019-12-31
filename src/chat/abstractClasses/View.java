@@ -24,7 +24,7 @@ public abstract class View<M extends Model> {
     protected View(Stage stage, M model) {
         this.stage = stage;
         this.model = model;
-        
+        stage.setTitle("Chat Bilger-Etter");
         scene = create_GUI(); // Create all controls within "root"
         stage.setScene(scene);
     }

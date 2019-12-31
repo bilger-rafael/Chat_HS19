@@ -39,6 +39,7 @@ public class NewUserView extends View<NewUserModel> {
 
 	public NewUserView(Stage stage, NewUserModel model) {
         super(stage, model);
+        stage.setTitle("Chat Bilger-Etter");
         ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
         
         

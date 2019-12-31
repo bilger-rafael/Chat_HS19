@@ -42,6 +42,7 @@ public class LoginView extends View<LoginModel> {
 
 	public LoginView(Stage stage, LoginModel model) {
 		super(stage, model);
+		stage.setTitle("Chat Bilger-Etter");
 		ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
 
 	}

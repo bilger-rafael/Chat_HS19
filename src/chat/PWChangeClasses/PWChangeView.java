@@ -27,6 +27,7 @@ public class PWChangeView  extends View<PWChangeModel> {
 
 	public PWChangeView(Stage stage, PWChangeModel model) {
 		super(stage, model);
+		stage.setTitle("Chat Bilger-Etter");
 		ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
 
 	}

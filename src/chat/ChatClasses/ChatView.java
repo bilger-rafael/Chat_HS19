@@ -33,6 +33,7 @@ public class ChatView extends View<ChatModel> {
 
 	public ChatView(Stage stage, ChatModel model) {
 		super(stage, model);
+		stage.setTitle("Chat: " + model.getChatName() );
 		ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
 
 	}

@@ -63,8 +63,7 @@ public class PWChangeController extends Controller<PWChangeModel, PWChangeView> 
 								closePWChangView();
 							});
 						} else {
-							JavaFX_App_Template.getMainProgram().getNewUserView().setErrorLabel();
-							ServiceLocator.getServiceLocator().getLogger().info("User gibt es schon");
+							
 						}
 						Client.getClient().removeMsgListener(this);
 					}

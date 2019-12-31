@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import chat.ServiceLocator;
 import chat.abstractClasses.View;
 import chat.commonClasses.Translator;
+import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,8 +17,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class NewUserView extends View<NewUserModel> {
 	
@@ -32,6 +35,7 @@ public class NewUserView extends View<NewUserModel> {
 	private VBox centerBox;
 	private BorderPane bottonBox;
 	private Label nameLabel, pwLabel, errorLabel;
+	private FadeTransition transition;
 
 	public NewUserView(Stage stage, NewUserModel model) {
         super(stage, model);
@@ -102,13 +106,18 @@ public class NewUserView extends View<NewUserModel> {
 		
 		centerBox.getChildren().addAll(nameLabel, nameField, pwLabel, pwField, bottonBox);
 		
-		//ErrorLabel
+		//ErrorLabel falls User erstellen fehlgeschlagen
 		errorLabel = new Label();
+		errorLabel.setId("errorLabel");
+		errorLabel.setOpacity(0);
+
+		
 		
 		//Borderpane anordnen
 		root.setTop(headMenu);
 		root.setCenter(centerBox);
 		root.setBottom(errorLabel);
+		
 
         
         updateTexts();
@@ -132,6 +141,7 @@ public class NewUserView extends View<NewUserModel> {
            pwLabel.setText(t.getString("Programm.newUser.pwLabel"));
            cancelButton.setText(t.getString("Programm.newUser.cancelButton"));
            okButton.setText(t.getString("Programm.newUser.okButton"));
+           errorLabel.setText(t.getString("Programm.newUser.errorLabel"));
 	                   
            stage.setTitle(t.getString("program.name"));
 	    }
@@ -155,9 +165,20 @@ public class NewUserView extends View<NewUserModel> {
 			return nameField;
 		}
 		
-		public void setErrorLabel() {
+		public void showError() {
 			Translator t = ServiceLocator.getServiceLocator().getTranslator();
 			errorLabel.setText(t.getString("Programm.newUser.errorLabel"));
+			
+			if( transition == null ) {
+				transition = new FadeTransition(Duration.millis(2000), errorLabel);
+				transition.setFromValue(1.0);
+				transition.setToValue(0);
+				transition.setDelay(Duration.millis(2000));
+			}
+			
+			transition.stop();
+			errorLabel.setOpacity(1);
+			transition.play();
 		}
 		public void resetPwField() {
 			pwField.setText("");

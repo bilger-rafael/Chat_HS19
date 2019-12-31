@@ -116,10 +116,14 @@ public class NewUserController extends Controller<NewUserModel, NewUserView> {
 								backLoginViewAfterLogin();
 							});
 						} else {
-							JavaFX_App_Template.getMainProgram().getNewUserView().setErrorLabel();
-							serviceLocator.getLogger().info("User gibt es schon");
+					
 						}
 						Client.getClient().removeMsgListener(this);
+					}
+					//Fehlermeldung anzeigen
+					if( r.getType() == ResultType.Simple && r.getBoolean() == false) {
+					view.showError();
+					serviceLocator.getLogger().info("User gibt es schon");
 					}
 				}
 			}

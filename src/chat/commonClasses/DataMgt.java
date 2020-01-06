@@ -1,5 +1,6 @@
 package chat.commonClasses;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -74,7 +75,9 @@ public class DataMgt implements Serializable{
 	  }
 	
 	  public void saveToFile() {
-	    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("C:/test.bin"))) {	
+		  String path = System.getProperty("java.io.tmpdir") + File.separator + "Chat.txt";
+		  
+	    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path))) {	
 	        out.writeObject(this.data);
 	        out.flush();
 

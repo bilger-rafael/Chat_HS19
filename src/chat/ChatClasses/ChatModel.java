@@ -1,7 +1,12 @@
 package chat.ChatClasses;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
+import java.util.ArrayList;
 import chat.ServiceLocator;
 import chat.abstractClasses.Model;
 import chat.commonClasses.Client;
@@ -18,7 +23,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ChatModel extends Model {
+public class ChatModel extends Model implements Serializable {
 	ServiceLocator serviceLocator;
 	DataMgt dataMgt;
 	protected String chatName;
@@ -30,18 +35,17 @@ public class ChatModel extends Model {
 	public ChatModel(String chatName) {
 		super();
 		this.chatName = chatName;
+		
+		Platform.runLater(() -> {
+			load();
+		});
 
 		connect();
-		
-		//TODO
-		//dataMgt = DataMgt.getDataMgt();
-		//Daten laden
-		//messages = DataMgt.getDataMgt().loadChat(chatName);
 
 		serviceLocator = ServiceLocator.getServiceLocator();
 		serviceLocator.getLogger().info("Application model initialized");
 	}
-	
+
 	public String getChatName() {
 		return chatName;
 	}
@@ -57,11 +61,10 @@ public class ChatModel extends Model {
 					if (r.getType() == ResultType.Simple) {
 						if (r.getBoolean()) {
 							serviceLocator.getLogger().info("Chatroom wieder beigetreten");
-							
+
 						} else {
-							// TODO Fehlermeldung anzeigen
 							serviceLocator.getLogger().info("Chatroom beitreten fehlgeschlagen");
-							
+
 							connected = false;
 						}
 						Client.getClient().removeMsgListener(this);
@@ -83,16 +86,15 @@ public class ChatModel extends Model {
 					if (r.getType() == ResultType.Simple) {
 						if (r.getBoolean()) {
 							serviceLocator.getLogger().info("Chatroom beigetreten");
-							
+
 							Client.getClient().addMsgListener(createMessageListener());
 
 							Client.getClient().addMsgListener(createOnlineUserListener());
-							
+
 							startUserUpdater();
 						} else {
-							// TODO Fehlermeldung anzeigen
 							serviceLocator.getLogger().info("Chatroom beitreten fehlgeschlagen");
-							
+
 							connected = false;
 						}
 						Client.getClient().removeMsgListener(this);
@@ -107,9 +109,10 @@ public class ChatModel extends Model {
 
 	protected void disconnect() {
 		connected = false;
-		
-		//TODO correct Error
-		//dataMgt.getDataMgt().saveChat(this.chatName, messages);
+
+		Platform.runLater(() -> {
+			save();
+		});
 
 		LeaveChatroom leaveChatroom = new LeaveChatroom(chatName);
 
@@ -132,7 +135,7 @@ public class ChatModel extends Model {
 		};
 
 	}
-	
+
 	private void startUserUpdater() {
 		ListChatroomUsers chatRoomUsers = new ListChatroomUsers(chatName);
 
@@ -144,7 +147,7 @@ public class ChatModel extends Model {
 					Client.getClient().send(chatRoomUsers);
 
 					try {
-						Thread.sleep(6000);
+						Thread.sleep(30000);
 					} catch (InterruptedException e) {
 					}
 				}
@@ -174,6 +177,38 @@ public class ChatModel extends Model {
 			}
 		};
 
+	}
+
+	public void save() {
+		// to avoid problems when multiple chats are read or written at the same time,
+		// use separate files (using a Database would be even better)
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(getSavePath()))) {
+			ArrayList<String> data = new ArrayList<String>(this.messages);
+			out.writeObject(data);
+			out.flush();
+
+			serviceLocator.getLogger().info("Daten gespeichert in " + getSavePath());
+		} catch (Exception e) {
+			serviceLocator.getLogger().info("Datenspeicherung fehlgeschlagen in " + getSavePath());
+		}
+	}
+
+	public void load() {
+		// to avoid problems when multiple chats are read or written at the same time,
+		// use separate files (using a Database would be even better)
+		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(getSavePath()))) {
+			ArrayList<String> data = (ArrayList<String>) in.readObject();
+			this.messages.addAll(data);
+
+			serviceLocator.getLogger().info("Daten geladen von " + getSavePath());
+		} catch (Exception e) {
+			serviceLocator.getLogger().info("Daten laden fehlgeschlagen in " + getSavePath());
+		}
+	}
+
+	private String getSavePath() {
+		String path = System.getProperty("java.io.tmpdir") + File.separator + "Chat_" + this.chatName + "_.txt";
+		return path;
 	}
 
 }

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import chat.ServiceLocator;
 import chat.abstractClasses.Model;
 import chat.commonClasses.Client;
-import chat.commonClasses.DataMgt;
 import chat.commonClasses.MessageListener;
 import chat.message.JoinChatroom;
 import chat.message.LeaveChatroom;
@@ -25,7 +24,6 @@ import javafx.collections.ObservableList;
 
 public class ChatModel extends Model implements Serializable {
 	ServiceLocator serviceLocator;
-	DataMgt dataMgt;
 	protected String chatName;
 	public volatile ObservableList<String> messages = FXCollections.observableArrayList();
 	public volatile ObservableList<String> users = FXCollections.observableArrayList();
